@@ -41,24 +41,16 @@ function switchTab(id, btn) {
 
 function toggleCard(card, sessionId) {
   const wasDone = card.classList.contains('done');
-  const isExpanded = card.classList.contains('expanded');
 
-  // If already done → toggle expanded only (to log weights)
+  // Toggle done state
   if (wasDone) {
-    card.classList.toggle('expanded');
-    return;
+    card.classList.remove('done');
+    state[sessionId]--;
+  } else {
+    card.classList.add('done');
+    state[sessionId]++;
   }
-
-  if (!isExpanded) {
-    // First tap: expand to show set tracker
-    card.classList.add('expanded');
-    return;
-  }
-
-  // Second tap when expanded: mark done
-  card.classList.remove('expanded');
-  card.classList.add('done');
-  state[sessionId]++;
+  
   updateProgress(sessionId);
   saveState();
 }
@@ -75,12 +67,10 @@ function updateProgress(id) {
   document.getElementById('sub-' + id).textContent = done + ' von ' + tot + ' Übungen erledigt';
 }
 
-function stopProp(e) { e.stopPropagation(); }
-
 function resetSession() {
   const panel = document.getElementById('panel-' + activeTab);
   panel.querySelectorAll('.ex-card').forEach(c => {
-    c.classList.remove('done', 'expanded');
+    c.classList.remove('done');
   });
   state[activeTab] = 0;
   updateProgress(activeTab);
