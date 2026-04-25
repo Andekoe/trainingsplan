@@ -121,14 +121,46 @@ function updateButtonText() {
 }
 
 function updateUIForUser(user) {
+  // Clear previous current-exercise highlights
+  document.querySelectorAll('.current-exercise').forEach(card => {
+    card.classList.remove('current-exercise');
+  });
+
   // Update progress for all sessions in the user
   Object.keys(state[user]).forEach(id => {
     updateProgress(id);
     const panel = document.getElementById('panel-' + id);
     if (panel) {
       const cards = panel.querySelectorAll('.ex-card');
-      for (let i = 0; i < state[user][id]; i++) {
-        if (cards[i]) cards[i].classList.add('done');
+      let firstUncheckedIndex = -1;
+
+      // Clear all done classes first, then add them back based on state
+      cards.forEach((card, index) => {
+        if (index < state[user][id]) {
+          card.classList.add('done');
+        } else {
+          card.classList.remove('done');
+          if (firstUncheckedIndex === -1) {
+            firstUncheckedIndex = index;
+          }
+        }
+      });
+
+      // Highlight the first unchecked exercise only for the active session
+      if (id === activeTab && firstUncheckedIndex !== -1 && cards[firstUncheckedIndex]) {
+        const isPush = id.startsWith('push');
+        cards[firstUncheckedIndex].classList.add('current-exercise');
+        if (!isPush) {
+          cards[firstUncheckedIndex].classList.add('pull-card');
+        }
+
+        // Scroll to the current exercise
+        setTimeout(() => {
+          cards[firstUncheckedIndex].scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }, 100);
       }
     }
   });
@@ -138,4 +170,5 @@ function updateUIForUser(user) {
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
   updateButtonText();
+  updateUIForUser(currentUser);
 });
