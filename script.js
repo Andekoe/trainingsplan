@@ -82,7 +82,17 @@ function resetSession() {
 }
 
 function finishSession() {
-  document.getElementById('complete-screen').classList.add('visible');
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  // Reset all trainings for current user
+  Object.keys(state[currentUser]).forEach(sessionId => {
+    state[currentUser][sessionId] = 0;
+  });
+  
+  // Update UI
+  updateUIForUser(currentUser);
+  saveState();
 }
 
 function closeComplete() {
@@ -121,47 +131,20 @@ function updateButtonText() {
 }
 
 function updateUIForUser(user) {
-  // Clear previous current-exercise highlights
-  document.querySelectorAll('.current-exercise').forEach(card => {
-    card.classList.remove('current-exercise');
-  });
-
   // Update progress for all sessions in the user
   Object.keys(state[user]).forEach(id => {
     updateProgress(id);
     const panel = document.getElementById('panel-' + id);
     if (panel) {
       const cards = panel.querySelectorAll('.ex-card');
-      let firstUncheckedIndex = -1;
-
       // Clear all done classes first, then add them back based on state
       cards.forEach((card, index) => {
         if (index < state[user][id]) {
           card.classList.add('done');
         } else {
           card.classList.remove('done');
-          if (firstUncheckedIndex === -1) {
-            firstUncheckedIndex = index;
-          }
         }
       });
-
-      // Highlight the first unchecked exercise only for the active session
-      if (id === activeTab && firstUncheckedIndex !== -1 && cards[firstUncheckedIndex]) {
-        const isPush = id.startsWith('push');
-        cards[firstUncheckedIndex].classList.add('current-exercise');
-        if (!isPush) {
-          cards[firstUncheckedIndex].classList.add('pull-card');
-        }
-
-        // Scroll to the current exercise
-        setTimeout(() => {
-          cards[firstUncheckedIndex].scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-          });
-        }, 100);
-      }
     }
   });
 }
