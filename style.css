@@ -226,6 +226,16 @@
     background: rgba(68, 242, 200, 0.03);
   }
 
+  .ex-card.done {
+    border-color: rgba(212,242,68,0.3);
+    background: var(--done-bg);
+    animation: cardSuccess 0.4s ease;
+  }
+
+  .pull-card.done {
+    border-color: rgba(68,242,200,0.3);
+  }
+
   @keyframes cardSuccess {
     0% { 
       opacity: 1;
