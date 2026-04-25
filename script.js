@@ -39,7 +39,8 @@ function switchTab(id, btn) {
   const isPush = id.startsWith('push');
   const btn2 = document.getElementById('btn-finish');
   btn2.className = 'btn-done ' + (isPush ? 'push' : 'pull');
-  document.getElementById('main-scroll').scrollTop = 0;
+  // Update UI and scroll to current exercise
+  updateUIForUser(currentUser);
 }
 
 function toggleCard(card, sessionId) {
@@ -51,6 +52,7 @@ function toggleCard(card, sessionId) {
     state[currentUser][sessionId]++;
   }
   updateProgress(sessionId);
+  updateUIForUser(currentUser); // Refresh highlighting after toggle
   saveState();
 }
 
@@ -71,10 +73,11 @@ function stopProp(e) { e.stopPropagation(); }
 function resetSession() {
   const panel = document.getElementById('panel-' + activeTab);
   panel.querySelectorAll('.ex-card').forEach(c => {
-    c.classList.remove('done', 'expanded');
+    c.classList.remove('done', 'expanded', 'current-exercise');
   });
   state[currentUser][activeTab] = 0;
   updateProgress(activeTab);
+  updateUIForUser(currentUser); // Refresh highlighting after reset
   saveState();
 }
 
@@ -118,21 +121,67 @@ function updateButtonText() {
 }
 
 function updateUIForUser(user) {
+<<<<<<< HEAD
+  // Clear previous current-exercise highlights
+  document.querySelectorAll('.current-exercise').forEach(card => {
+    card.classList.remove('current-exercise');
+  });
+
+=======
+>>>>>>> 2b6cc1a67404cdb89f0493c194952f4d72102635
   // Update progress for all sessions in the user
   Object.keys(state[user]).forEach(id => {
     updateProgress(id);
     const panel = document.getElementById('panel-' + id);
     if (panel) {
       const cards = panel.querySelectorAll('.ex-card');
+<<<<<<< HEAD
+      let firstUncheckedIndex = -1;
+
+      for (let i = 0; i < cards.length; i++) {
+        if (i < state[user][id]) {
+          cards[i].classList.add('done');
+        } else {
+          cards[i].classList.remove('done');
+          if (firstUncheckedIndex === -1) {
+            firstUncheckedIndex = i;
+          }
+        }
+      }
+
+      // Highlight the first unchecked exercise only for the active session
+      if (id === activeTab && firstUncheckedIndex !== -1 && cards[firstUncheckedIndex]) {
+        const isPush = id.startsWith('push');
+        cards[firstUncheckedIndex].classList.add('current-exercise');
+        if (!isPush) {
+          cards[firstUncheckedIndex].classList.add('pull-card');
+        }
+
+        // Scroll to the current exercise
+        setTimeout(() => {
+          cards[firstUncheckedIndex].scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }, 100);
+=======
       for (let i = 0; i < state[user][id]; i++) {
         if (cards[i]) cards[i].classList.add('done');
+>>>>>>> 2b6cc1a67404cdb89f0493c194952f4d72102635
       }
     }
   });
 }
 
 // Initialize on load
+<<<<<<< HEAD
+window.addEventListener('load', () => {
+  loadState();
+  updateButtonText();
+  updateUIForUser(currentUser);
+=======
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
   updateButtonText();
+>>>>>>> 2b6cc1a67404cdb89f0493c194952f4d72102635
 });

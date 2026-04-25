@@ -212,6 +212,20 @@
 
   .ex-card:active {
     transform: scale(0.98);
+<<<<<<< HEAD
+  }
+
+  .ex-card.current-exercise {
+    border-color: var(--push);
+    box-shadow: 0 0 0 2px rgba(212, 242, 68, 0.15);
+    background: rgba(212, 242, 68, 0.03);
+  }
+
+  .pull-card.current-exercise {
+    border-color: var(--pull);
+    box-shadow: 0 0 0 2px rgba(68, 242, 200, 0.15);
+    background: rgba(68, 242, 200, 0.03);
+=======
   }
 
   .ex-card.done {
@@ -222,6 +236,7 @@
 
   .pull-card.done {
     border-color: rgba(68,242,200,0.3);
+>>>>>>> 2b6cc1a67404cdb89f0493c194952f4d72102635
   }
 
   @keyframes cardSuccess {
