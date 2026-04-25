@@ -1,21 +1,24 @@
-const state = { pushA:0, pullA:0, pushB:0, pullB:0 };
-const total = { pushA:7, pullA:7, pushB:7, pullB:7 };
+const state = {
+  plan1: { pushA: 0, pullA: 0, pushB: 0, pullB: 0 },
+  plan2: { plan2: 0 }
+};
+const total = {
+  plan1: { pushA: 7, pullA: 7, pushB: 7, pullB: 7 },
+  plan2: { plan2: 7 }
+};
+let currentUser = 'plan1';
 let activeTab = 'pushA';
 
 // Load state from localStorage
 function loadState() {
   const saved = localStorage.getItem('trainingsplan-state');
   if (saved) {
-    Object.assign(state, JSON.parse(saved));
-    // Update UI to reflect saved state
-    Object.keys(state).forEach(id => {
-      updateProgress(id);
-      const panel = document.getElementById('panel-' + id);
-      const cards = panel.querySelectorAll('.ex-card');
-      for (let i = 0; i < state[id]; i++) {
-        if (cards[i]) cards[i].classList.add('done');
-      }
-    });
+    const parsed = JSON.parse(saved);
+    // Merge saved state
+    if (parsed.plan1) Object.assign(state.plan1, parsed.plan1);
+    if (parsed.plan2) Object.assign(state.plan2, parsed.plan2);
+    // Update UI
+    updateUIForUser(currentUser);
   }
 }
 
@@ -40,25 +43,21 @@ function switchTab(id, btn) {
 }
 
 function toggleCard(card, sessionId) {
-  const wasDone = card.classList.contains('done');
-
-  // Toggle done state
-  if (wasDone) {
+  if (card.classList.contains('done')) {
     card.classList.remove('done');
-    state[sessionId]--;
+    state[currentUser][sessionId]--;
   } else {
     card.classList.add('done');
-    state[sessionId]++;
+    state[currentUser][sessionId]++;
   }
-  
   updateProgress(sessionId);
   saveState();
 }
 
 function updateProgress(id) {
-  const done = state[id];
-  const tot  = total[id];
-  const pct  = Math.round((done / tot) * 100);
+  const done = state[currentUser][id];
+  const tot = total[currentUser][id];
+  const pct = Math.round((done / tot) * 100);
   const circumference = 113.1;
   const offset = circumference - (circumference * pct / 100);
 
@@ -67,12 +66,14 @@ function updateProgress(id) {
   document.getElementById('sub-' + id).textContent = done + ' von ' + tot + ' Übungen erledigt';
 }
 
+function stopProp(e) { e.stopPropagation(); }
+
 function resetSession() {
   const panel = document.getElementById('panel-' + activeTab);
   panel.querySelectorAll('.ex-card').forEach(c => {
-    c.classList.remove('done');
+    c.classList.remove('done', 'expanded');
   });
-  state[activeTab] = 0;
+  state[currentUser][activeTab] = 0;
   updateProgress(activeTab);
   saveState();
 }
@@ -85,5 +86,53 @@ function closeComplete() {
   document.getElementById('complete-screen').classList.remove('visible');
 }
 
+function switchUser() {
+  if (currentUser === 'plan1') {
+    currentUser = 'plan2';
+    document.getElementById('tab-row').style.display = 'none';
+    // deactivate all panels
+    document.querySelectorAll('.training-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-plan2').classList.add('active');
+    document.getElementById('session-badge').textContent = 'Plan 2';
+    // update finish button to push color
+    document.getElementById('btn-finish').className = 'btn-done push';
+    activeTab = 'plan2';
+  } else {
+    currentUser = 'plan1';
+    document.getElementById('tab-row').style.display = 'flex';
+    // switch to pushA
+    const pushABtn = document.querySelector('.tab.push.active') || document.querySelector('.tab.push');
+    switchTab('pushA', pushABtn);
+  }
+  updateButtonText();
+  updateUIForUser(currentUser);
+}
+
+function updateButtonText() {
+  const btn = document.getElementById('user-switch');
+  if (currentUser === 'plan1') {
+    btn.textContent = 'Plan 1 (aktiv)';
+  } else {
+    btn.textContent = 'Plan 2 (aktiv)';
+  }
+}
+
+function updateUIForUser(user) {
+  // Update progress for all sessions in the user
+  Object.keys(state[user]).forEach(id => {
+    updateProgress(id);
+    const panel = document.getElementById('panel-' + id);
+    if (panel) {
+      const cards = panel.querySelectorAll('.ex-card');
+      for (let i = 0; i < state[user][id]; i++) {
+        if (cards[i]) cards[i].classList.add('done');
+      }
+    }
+  });
+}
+
 // Initialize on load
-document.addEventListener('DOMContentLoaded', loadState);
+document.addEventListener('DOMContentLoaded', () => {
+  loadState();
+  updateButtonText();
+});

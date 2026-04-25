@@ -42,6 +42,20 @@
     line-height: 1;
   }
 
+  #user-switch {
+    padding: 8px 16px;
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  #user-switch:hover { background: var(--s2); }
+
   .session-badge {
     font-size: 11px;
     font-weight: 600;
@@ -238,6 +252,25 @@
     background: var(--dim);
     color: var(--muted);
     letter-spacing: 0.3px;
+  }
+
+  /* ── GROUP LABEL ── */
+  .group-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 20px 0 12px;
+    padding: 0 16px;
+  }
+
+  .warmup-note {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 8px 0 12px;
+    padding: 0 16px;
+    line-height: 1.4;
   }
 
   /* ── BOTTOM BAR ── */

@@ -12,11 +12,12 @@
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="logo">GYM LOG</div>
+  <button id="user-switch" onclick="switchUser()">Plan 1 (aktiv)</button>
   <div class="session-badge" id="session-badge">Push A</div>
 </div>
 
 <!-- TRAINING TABS -->
-<div class="tab-row">
+<div class="tab-row" id="tab-row">
   <button class="tab push active" onclick="switchTab('pushA', this)">Push A</button>
   <button class="tab pull" onclick="switchTab('pullA', this)">Pull A</button>
   <button class="tab push" onclick="switchTab('pushB', this)">Push B</button>
@@ -552,6 +553,142 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ═══ PLAN 2 ═══ -->
+  <div class="training-panel" id="panel-plan2">
+    <div class="session-header">
+      <div class="session-title accent-push">PLAN 2</div>
+      <div class="session-meta">
+        <span>Beginner · Full Body</span>
+        <span>·</span>
+        <span>7 Übungen</span>
+      </div>
+    </div>
+
+    <div class="overall-progress">
+      <div class="prog-ring">
+        <svg width="44" height="44" viewBox="0 0 44 44">
+          <circle class="ring-bg" cx="22" cy="22" r="18"/>
+          <circle class="ring-fill" id="ring-plan2" cx="22" cy="22" r="18"
+            stroke="#d4f244"
+            stroke-dasharray="113.1"
+            stroke-dashoffset="113.1"/>
+        </svg>
+        <div class="ring-text" id="pct-plan2">0%</div>
+      </div>
+      <div class="prog-info">
+        <div class="prog-label">Session Fortschritt</div>
+        <div class="prog-sub" id="sub-plan2">0 von 7 Übungen erledigt</div>
+      </div>
+    </div>
+
+    <div class="group-label">Warm-up</div>
+    <div class="warmup-note">5–10 Minuten leichtes Cardio (Laufband oder Crosstrainer)</div>
+
+    <div class="group-label">Übungen</div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Beinpresse</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">3 Sätze</span>
+            <span class="set-pill">10–12 Wdh</span>
+            <span class="set-pill">Maschine</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Latzug</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">3 Sätze</span>
+            <span class="set-pill">10–12 Wdh</span>
+            <span class="set-pill">Maschine</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Brustpresse Maschine</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">3 Sätze</span>
+            <span class="set-pill">10–12 Wdh</span>
+            <span class="set-pill">Maschine</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Seated Row</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">3 Sätze</span>
+            <span class="set-pill">10–12 Wdh</span>
+            <span class="set-pill">Maschine/Kabel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Schulterpresse Maschine</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">3 Sätze</span>
+            <span class="set-pill">10 Wdh</span>
+            <span class="set-pill">Maschine</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Glute Bridge / Hip Thrust</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">3 Sätze</span>
+            <span class="set-pill">12–15 Wdh</span>
+            <span class="set-pill">Körpergewicht/KH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Plank</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">2 Sätze</span>
+            <span class="set-pill">20–30 Sek</span>
+            <span class="set-pill">Körpergewicht</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-label">Optional</div>
+    <div class="warmup-note">10–20 Minuten leichtes Cardio nach dem Workout</div>
+    <div class="warmup-note">Mäßige Gewichte mit guter Form verwenden. 60–90 Sek Pause zwischen Sätzen.</div>
   </div>
 
 </div><!-- /main -->
