@@ -1,6 +1,13 @@
 const state = {
-  plan1: { pushA: 0, pullA: 0, pushB: 0, pullB: 0 },
-  plan2: { plan2: 0 }
+  plan1: {
+    pushA: {}, // Will store exercise indices as keys (0-6)
+    pullA: {},
+    pushB: {},
+    pullB: {}
+  },
+  plan2: {
+    plan2: {} // Will store exercise indices as keys (0-6)
+  }
 };
 const total = {
   plan1: { pushA: 7, pullA: 7, pushB: 7, pullB: 7 },
@@ -14,11 +21,41 @@ function loadState() {
   const saved = localStorage.getItem('trainingsplan-state');
   if (saved) {
     const parsed = JSON.parse(saved);
-    // Merge saved state
-    if (parsed.plan1) Object.assign(state.plan1, parsed.plan1);
-    if (parsed.plan2) Object.assign(state.plan2, parsed.plan2);
+    // Migrate old format (numbers) to new format (objects)
+    if (parsed.plan1) {
+      Object.keys(parsed.plan1).forEach(sessionId => {
+        const value = parsed.plan1[sessionId];
+        if (typeof value === 'number') {
+          // Convert number to object format
+          const exerciseStates = {};
+          for (let i = 0; i < value; i++) {
+            exerciseStates[i] = true;
+          }
+          state.plan1[sessionId] = exerciseStates;
+        } else {
+          // Already in new format
+          state.plan1[sessionId] = value || {};
+        }
+      });
+    }
+    if (parsed.plan2) {
+      Object.keys(parsed.plan2).forEach(sessionId => {
+        const value = parsed.plan2[sessionId];
+        if (typeof value === 'number') {
+          // Convert number to object format
+          const exerciseStates = {};
+          for (let i = 0; i < value; i++) {
+            exerciseStates[i] = true;
+          }
+          state.plan2[sessionId] = exerciseStates;
+        } else {
+          // Already in new format
+          state.plan2[sessionId] = value || {};
+        }
+      });
+    }
     // Update UI
-    updateUIForUser(currentUser);
+    updateUIForUser(currentUser, null);
   }
 }
 
@@ -40,24 +77,36 @@ function switchTab(id, btn) {
   const btn2 = document.getElementById('btn-finish');
   btn2.className = 'btn-done ' + (isPush ? 'push' : 'pull');
   // Update UI and scroll to current exercise
-  updateUIForUser(currentUser);
+  updateUIForUser(currentUser, null);
 }
 
 function toggleCard(card, sessionId) {
+  // Find the index of this card within its panel
+  const panel = document.getElementById('panel-' + sessionId);
+  const cards = Array.from(panel.querySelectorAll('.ex-card'));
+  const exerciseIndex = cards.indexOf(card);
+
+  if (exerciseIndex === -1) {
+    return;
+  }
+
+  // Toggle the exercise state
   if (card.classList.contains('done')) {
     card.classList.remove('done');
-    state[currentUser][sessionId]--;
+    delete state[currentUser][sessionId][exerciseIndex];
   } else {
     card.classList.add('done');
-    state[currentUser][sessionId]++;
+    state[currentUser][sessionId][exerciseIndex] = true;
   }
+
   updateProgress(sessionId);
-  updateUIForUser(currentUser); // Refresh highlighting after toggle
+  updateUIForUser(currentUser, sessionId); // Update UI for this session only
   saveState();
 }
 
 function updateProgress(id) {
-  const done = state[currentUser][id];
+  const exerciseStates = state[currentUser][id];
+  const done = Object.keys(exerciseStates).length; // Count done exercises
   const tot = total[currentUser][id];
   const pct = Math.round((done / tot) * 100);
   const circumference = 113.1;
@@ -75,9 +124,8 @@ function resetSession() {
   panel.querySelectorAll('.ex-card').forEach(c => {
     c.classList.remove('done', 'expanded', 'current-exercise');
   });
-  state[currentUser][activeTab] = 0;
+  state[currentUser][activeTab] = {}; // Clear all exercise states
   updateProgress(activeTab);
-  updateUIForUser(currentUser); // Refresh highlighting after reset
   saveState();
 }
 
@@ -87,16 +135,12 @@ function finishSession() {
   
   // Reset all trainings for current user
   Object.keys(state[currentUser]).forEach(sessionId => {
-    state[currentUser][sessionId] = 0;
+    state[currentUser][sessionId] = {}; // Clear all exercise states
   });
   
   // Update UI
-  updateUIForUser(currentUser);
+  updateUIForUser(currentUser, null);
   saveState();
-}
-
-function closeComplete() {
-  document.getElementById('complete-screen').classList.remove('visible');
 }
 
 function switchUser() {
@@ -118,7 +162,7 @@ function switchUser() {
     switchTab('pushA', pushABtn);
   }
   updateButtonText();
-  updateUIForUser(currentUser);
+  updateUIForUser(currentUser, null);
 }
 
 function updateButtonText() {
@@ -130,16 +174,18 @@ function updateButtonText() {
   }
 }
 
-function updateUIForUser(user) {
-  // Update progress for all sessions in the user
-  Object.keys(state[user]).forEach(id => {
+function updateUIForUser(user, sessionId) {
+  // Update progress and UI for specified session or all sessions
+  const sessionsToUpdate = sessionId ? [sessionId] : Object.keys(state[user]);
+  sessionsToUpdate.forEach(id => {
     updateProgress(id);
     const panel = document.getElementById('panel-' + id);
     if (panel) {
       const cards = panel.querySelectorAll('.ex-card');
-      // Clear all done classes first, then add them back based on state
+      const exerciseStates = state[user][id];
+      // Set done class based on individual exercise states
       cards.forEach((card, index) => {
-        if (index < state[user][id]) {
+        if (exerciseStates[index]) {
           card.classList.add('done');
         } else {
           card.classList.remove('done');
@@ -153,5 +199,5 @@ function updateUIForUser(user) {
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
   updateButtonText();
-  updateUIForUser(currentUser);
+  updateUIForUser(currentUser, null);
 });
