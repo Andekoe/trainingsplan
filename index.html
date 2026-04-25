@@ -12,11 +12,12 @@
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="logo">GYM LOG</div>
+  <button id="user-switch" onclick="switchUser()">Plan 1 (aktiv)</button>
   <div class="session-badge" id="session-badge">Push A</div>
 </div>
 
 <!-- TRAINING TABS -->
-<div class="tab-row">
+<div class="tab-row" id="tab-row">
   <button class="tab push active" onclick="switchTab('pushA', this)">Push A</button>
   <button class="tab pull" onclick="switchTab('pullA', this)">Pull A</button>
   <button class="tab push" onclick="switchTab('pushB', this)">Push B</button>
@@ -68,14 +69,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">4</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card" onclick="toggleCard(this,'pushA')">
@@ -89,13 +82,6 @@
             <span class="set-pill">KH</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
 
@@ -111,14 +97,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">4</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card" onclick="toggleCard(this,'pushA')">
@@ -133,13 +111,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card" onclick="toggleCard(this,'pushA')">
@@ -153,13 +124,6 @@
             <span class="set-pill">Körpergewicht</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
 
@@ -178,13 +142,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card" onclick="toggleCard(this,'pushA')">
@@ -198,12 +155,6 @@
             <span class="set-pill">Maschine</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
   </div>
@@ -250,14 +201,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">4</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card pull-card" onclick="toggleCard(this,'pullA')">
@@ -271,14 +214,6 @@
             <span class="set-pill">Kabel</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">4</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
 
@@ -294,13 +229,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card pull-card" onclick="toggleCard(this,'pullA')">
@@ -315,13 +243,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card pull-card" onclick="toggleCard(this,'pullA')">
@@ -335,13 +256,6 @@
             <span class="set-pill">KH</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
 
@@ -360,13 +274,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card pull-card" onclick="toggleCard(this,'pullA')">
@@ -380,12 +287,6 @@
             <span class="set-pill">Maschine</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
   </div>
@@ -432,14 +333,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">4</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card" onclick="toggleCard(this,'pushB')">
@@ -453,13 +346,6 @@
             <span class="set-pill">Maschine</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
 
@@ -475,13 +361,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card" onclick="toggleCard(this,'pushB')">
@@ -496,13 +375,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card" onclick="toggleCard(this,'pushB')">
@@ -516,13 +388,6 @@
             <span class="set-pill">Kabel / KH</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
 
@@ -541,13 +406,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card" onclick="toggleCard(this,'pushB')">
@@ -561,12 +419,6 @@
             <span class="set-pill">Maschine</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
   </div>
@@ -613,14 +465,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">4</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card pull-card" onclick="toggleCard(this,'pullB')">
@@ -634,14 +478,6 @@
             <span class="set-pill">Kabel</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">4</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
 
@@ -657,13 +493,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card pull-card" onclick="toggleCard(this,'pullB')">
@@ -678,13 +507,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card pull-card" onclick="toggleCard(this,'pullB')">
@@ -698,12 +520,6 @@
             <span class="set-pill">KH</span>
           </div>
         </div>
-      </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
       </div>
     </div>
 
@@ -722,13 +538,6 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">3</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
-      </div>
     </div>
 
     <div class="ex-card pull-card" onclick="toggleCard(this,'pullB')">
@@ -743,13 +552,139 @@
           </div>
         </div>
       </div>
-      <div class="set-tracker">
-        <div class="set-row-header"><span>#</span><span>Gewicht (kg)</span><span>Wdh</span></div>
-        <div class="set-row"><div class="set-num">1</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-row"><div class="set-num">2</div><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"><input class="set-input" type="number" placeholder="—" onclick="stopProp(event)"></div>
-        <div class="set-tip">Tippe Übung nochmal an zum Abhaken</div>
+    </div>
+  </div>
+
+  <!-- ═══ PLAN 2 ═══ -->
+  <div class="training-panel" id="panel-plan2">
+    <div class="session-header">
+      <div class="session-title accent-push">PLAN 2</div>
+      <div class="session-meta">
+        <span>Beginner · Full Body</span>
+        <span>·</span>
+        <span>7 Übungen</span>
       </div>
     </div>
+
+    <div class="overall-progress">
+      <div class="prog-ring">
+        <svg width="44" height="44" viewBox="0 0 44 44">
+          <circle class="ring-bg" cx="22" cy="22" r="18"/>
+          <circle class="ring-fill" id="ring-plan2" cx="22" cy="22" r="18"
+            stroke="#d4f244"
+            stroke-dasharray="113.1"
+            stroke-dashoffset="113.1"/>
+        </svg>
+        <div class="ring-text" id="pct-plan2">0%</div>
+      </div>
+      <div class="prog-info">
+        <div class="prog-label">Session Fortschritt</div>
+        <div class="prog-sub" id="sub-plan2">0 von 7 Übungen erledigt</div>
+      </div>
+    </div>
+
+    <div class="group-label">Warm-up</div>
+    <div class="warmup-note">5–10 Minuten leichtes Cardio (Laufband oder Crosstrainer)</div>
+
+    <div class="group-label">Übungen</div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Beinpresse</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">2–3 Sätze</span>
+            <span class="set-pill">10–12 Wdh</span>
+            <span class="set-pill">Maschine</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Brustpresse</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">2–3 Sätze</span>
+            <span class="set-pill">10–12 Wdh</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Rudern (enger Griff)</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">2–3 Sätze</span>
+            <span class="set-pill">10–12 Wdh</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Beinbeuger</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">2 Sätze</span>
+            <span class="set-pill">10–12 Wdh</span>
+            <span class="set-pill">Maschine</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Schulterdrücken</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">2 Sätze</span>
+            <span class="set-pill">8–10 Wdh</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Seitheben</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">2 Sätze</span>
+            <span class="set-pill">12–15 Wdh</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-card" onclick="toggleCard(this,'plan2')">
+      <div class="ex-main">
+        <div class="ex-check">✓</div>
+        <div class="ex-info">
+          <div class="ex-name">Crunch Maschine oder Plank</div>
+          <div class="ex-sets-row">
+            <span class="set-pill">2 Sätze</span>
+            <span class="set-pill">12–15 Wdh / 20–30s</span>
+            <span class="set-pill">Core</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-label">Optional</div>
+    <div class="warmup-note">10–20 Minuten leichtes Cardio nach dem Workout</div>
+    <div class="warmup-note">Mäßige Gewichte mit guter Form verwenden. 60–90 Sek Pause zwischen Sätzen.</div>
   </div>
 
 </div><!-- /main -->

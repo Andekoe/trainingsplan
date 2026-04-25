@@ -42,6 +42,30 @@
     line-height: 1;
   }
 
+  #user-switch {
+    padding: 10px 18px;
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  #user-switch:hover { 
+    background: var(--s2);
+    border-color: var(--muted);
+  }
+
+  #user-switch:active {
+    transform: scale(0.96);
+  }
+
   .session-badge {
     font-size: 11px;
     font-weight: 600;
@@ -76,12 +100,23 @@
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     white-space: nowrap;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
   }
 
   .tab.push.active { background: var(--push); color: #000; border-color: var(--push); }
   .tab.pull.active { background: var(--pull); color: #000; border-color: var(--pull); }
+
+  .tab:hover {
+    border-color: var(--muted);
+  }
+
+  .tab:active {
+    transform: scale(0.96);
+  }
 
   /* ── MAIN SCROLL AREA ── */
   .main {
@@ -142,7 +177,7 @@
   .prog-ring svg { transform: rotate(-90deg); }
 
   .prog-ring .ring-bg { fill: none; stroke: var(--dim); stroke-width: 3; }
-  .prog-ring .ring-fill { fill: none; stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset 0.4s ease; }
+  .prog-ring .ring-fill { fill: none; stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
   .prog-ring .ring-text {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
@@ -170,12 +205,38 @@
     border-radius: var(--radius);
     margin-bottom: 8px;
     overflow: hidden;
-    transition: border-color 0.2s;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
   }
 
-  .ex-card.done {
-    border-color: rgba(212,242,68,0.2);
-    background: var(--done-bg);
+  .ex-card:active {
+    transform: scale(0.98);
+  }
+
+  .ex-card.current-exercise {
+    border-color: var(--push);
+    box-shadow: 0 0 0 2px rgba(212, 242, 68, 0.15);
+    background: rgba(212, 242, 68, 0.03);
+  }
+
+  .pull-card.current-exercise {
+    border-color: var(--pull);
+    box-shadow: 0 0 0 2px rgba(68, 242, 200, 0.15);
+    background: rgba(68, 242, 200, 0.03);
+  }
+
+  @keyframes cardSuccess {
+    0% { 
+      opacity: 1;
+      border-color: rgba(212,242,68,0.1);
+    }
+    50% { 
+      border-color: rgba(212,242,68,0.4);
+    }
+    100% { 
+      border-color: rgba(212,242,68,0.2);
+    }
   }
 
   .ex-main {
@@ -183,8 +244,12 @@
     align-items: center;
     gap: 14px;
     padding: 16px;
-    cursor: pointer;
     min-height: 72px;
+    transition: background 0.2s ease;
+  }
+
+  .ex-card:not(.done) .ex-main:hover {
+    background: rgba(255, 255, 255, 0.02);
   }
 
   /* Big tap target checkbox */
@@ -197,19 +262,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     font-size: 16px;
+    position: relative;
   }
 
   .ex-card.done .ex-check {
     background: var(--push);
     border-color: var(--push);
     color: #000;
+    box-shadow: 0 4px 16px rgba(212, 242, 68, 0.2);
+    animation: checkPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .pull-card.done .ex-check {
     background: var(--pull);
     border-color: var(--pull);
+    box-shadow: 0 4px 16px rgba(68, 242, 200, 0.2);
+    animation: checkPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes checkPop {
+    0% { transform: scale(0.85) rotate(-10deg); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1) rotate(0deg); }
   }
 
   .ex-info { flex: 1; min-width: 0; }
@@ -218,10 +294,13 @@
     font-size: 16px;
     font-weight: 600;
     line-height: 1.2;
-    transition: color 0.2s;
+    transition: color 0.3s ease, opacity 0.3s ease;
   }
 
-  .ex-card.done .ex-name { color: var(--muted); }
+  .ex-card.done .ex-name { 
+    color: var(--muted); 
+    opacity: 0.8;
+  }
 
   .ex-sets-row {
     display: flex;
@@ -240,72 +319,23 @@
     letter-spacing: 0.3px;
   }
 
-  /* ── SET TRACKER (expandable) ── */
-  .set-tracker {
-    display: none;
-    padding: 0 16px 14px;
-    border-top: 1px solid var(--border);
-    margin-top: 0;
-  }
-
-  .ex-card.expanded .set-tracker { display: block; }
-
-  .set-row-header {
-    display: grid;
-    grid-template-columns: 28px 1fr 1fr;
-    gap: 8px;
-    padding: 10px 0 6px;
-    font-size: 10px;
+  /* ── GROUP LABEL ── */
+  .group-label {
+    font-size: 12px;
     font-weight: 600;
-    color: var(--muted);
+    color: var(--text);
     text-transform: uppercase;
     letter-spacing: 1px;
+    margin: 20px 0 12px;
+    padding: 0 16px;
   }
 
-  .set-row {
-    display: grid;
-    grid-template-columns: 28px 1fr 1fr;
-    gap: 8px;
-    align-items: center;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .set-row:last-child { border-bottom: none; }
-
-  .set-num {
-    font-size: 13px;
-    font-weight: 600;
+  .warmup-note {
+    font-size: 14px;
     color: var(--muted);
-    text-align: center;
-  }
-
-  .set-input {
-    background: var(--s2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 12px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    text-align: center;
-    width: 100%;
-    -webkit-appearance: none;
-  }
-
-  .set-input:focus {
-    outline: none;
-    border-color: var(--push);
-  }
-
-  .set-input::placeholder { color: var(--muted); }
-
-  .set-tip {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 10px;
-    text-align: center;
+    margin: 8px 0 12px;
+    padding: 0 16px;
+    line-height: 1.4;
   }
 
   /* ── BOTTOM BAR ── */
@@ -323,36 +353,57 @@
   .btn-reset {
     flex: 0 0 auto;
     padding: 0 18px;
-    height: 52px;
+    height: 48px;
     background: none;
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 12px;
     color: var(--muted);
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+    min-width: 48px;
   }
 
-  .btn-reset:active { border-color: var(--muted); color: var(--text); }
+  .btn-reset:hover { 
+    border-color: var(--muted); 
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .btn-reset:active { 
+    transform: scale(0.95);
+  }
 
   .btn-done {
     flex: 1;
-    height: 52px;
+    height: 48px;
     border: none;
-    border-radius: 14px;
+    border-radius: 12px;
     font-family: 'DM Sans', sans-serif;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
   }
 
   .btn-done.push { background: var(--push); color: #000; }
   .btn-done.pull { background: var(--pull); color: #000; }
-  .btn-done:active { transform: scale(0.98); opacity: 0.9; }
+
+  .btn-done:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-done:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
 
   /* ── COMPLETION SCREEN ── */
   .complete-screen {
