@@ -405,46 +405,6 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
-  /* ── COMPLETION SCREEN ── */
-  .complete-screen {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--bg);
-    z-index: 300;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-    text-align: center;
-  }
-
-  .complete-screen.visible { display: flex; }
-
-  .complete-emoji { font-size: 64px; margin-bottom: 24px; }
-
-  .complete-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 56px;
-    letter-spacing: 3px;
-    line-height: 1;
-    margin-bottom: 12px;
-  }
-
-  .complete-sub { font-size: 16px; color: var(--muted); margin-bottom: 40px; line-height: 1.5; }
-
-  .btn-back {
-    padding: 16px 40px;
-    background: var(--push);
-    color: #000;
-    border: none;
-    border-radius: 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
   /* Panel visibility */
   .training-panel { display: none; }
   .training-panel.active { display: block; }

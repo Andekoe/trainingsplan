@@ -10,12 +10,25 @@ A mobile-friendly workout tracker app for gym users. Track your progress through
 - **Set logging**: Expandable cards to log weights and reps
 - **Local state**: No backend required, works offline
 - **Dark theme**: Easy on the eyes in gym environments
+- **PWA support**: Install as app on iOS home screen with offline caching
+- **Motivation boost**: Celebration screen after completing full workouts
 
 ## Setup
 
 1. Clone or download the repository
 2. Open `index.html` in a modern web browser
 3. Start your workout!
+
+## PWA Installation
+
+This app can be installed as a Progressive Web App (PWA) on iOS devices:
+
+1. Open the app in Safari on iOS
+2. Tap the Share button (square with arrow)
+3. Select "Add to Home Screen"
+4. The app will appear on your home screen with a custom icon
+
+The PWA includes offline caching, so the app works even without internet connection.
 
 ## Usage
 

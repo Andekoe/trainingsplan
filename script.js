@@ -139,9 +139,22 @@ function resetSession() {
 }
 
 function finishSession() {
-  // Check if workout is complete
-  if (isWorkoutComplete(currentUser)) {
-    // Show success screen
+  // TEMPORARY: Always show success screen for testing
+  document.getElementById('complete-screen').classList.add('visible');
+  return;
+  
+  // Check if current session is complete
+  const currentSessionComplete = Object.keys(state[currentUser][activeTab]).length === total[currentUser][activeTab];
+  
+  // Check if full workout is complete
+  const fullWorkoutComplete = isWorkoutComplete(currentUser);
+  
+  if (fullWorkoutComplete) {
+    // Show success screen for full workout completion
+    document.getElementById('complete-screen').classList.add('visible');
+    return;
+  } else if (currentSessionComplete) {
+    // Show success screen for session completion
     document.getElementById('complete-screen').classList.add('visible');
     return;
   }

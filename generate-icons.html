@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dumbbell Icon Generator</title>
+</head>
+<body>
+  <canvas id="canvas" width="512" height="512"></canvas>
+  <br>
+  <button onclick="generateIcons()">Generate Icons</button>
+  <br><br>
+  <a id="download192" download="icon-192.png">Download 192x192</a><br>
+  <a id="download512" download="icon-512.png">Download 512x512</a><br>
+  <a id="download180" download="icon-180.png">Download 180x180</a>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    function drawDumbbell(size) {
+      canvas.width = size;
+      canvas.height = size;
+
+      // Background
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, size, size);
+
+      // Calculate scaling
+      const scale = size / 512;
+      const centerX = size / 2;
+      const centerY = size / 2;
+
+      // Draw dumbbell plates (rounded rectangles)
+      ctx.fillStyle = '#ffffff';
+      const plateWidth = 80 * scale;
+      const plateHeight = 80 * scale;
+      const plateRadius = 8 * scale;
+
+      // Left plate
+      ctx.beginPath();
+      ctx.roundRect(centerX - 180 * scale, centerY - 40 * scale, plateWidth, plateHeight, plateRadius);
+      ctx.fill();
+
+      // Right plate
+      ctx.beginPath();
+      ctx.roundRect(centerX + 100 * scale, centerY - 40 * scale, plateWidth, plateHeight, plateRadius);
+      ctx.fill();
+
+      // Bar
+      const barWidth = 200 * scale;
+      const barHeight = 16 * scale;
+      const barRadius = 8 * scale;
+      ctx.beginPath();
+      ctx.roundRect(centerX - 100 * scale, centerY - 8 * scale, barWidth, barHeight, barRadius);
+      ctx.fill();
+
+      // Center knurling
+      ctx.fillStyle = '#666666';
+      ctx.fillRect(centerX - 4 * scale, centerY - 12 * scale, 8 * scale, 24 * scale);
+
+      return canvas.toDataURL('image/png');
+    }
+
+    function generateIcons() {
+      // Generate 192x192
+      const icon192 = drawDumbbell(192);
+      document.getElementById('download192').href = icon192;
+
+      // Generate 512x512
+      const icon512 = drawDumbbell(512);
+      document.getElementById('download512').href = icon512;
+
+      // Generate 180x180 (iOS optimized)
+      const icon180 = drawDumbbell(180);
+      document.getElementById('download180').href = icon180;
+
+      alert('Icons generated! Click the download links to save them.');
+    }
+
+    // Auto-generate on load for convenience
+    window.onload = function() {
+      generateIcons();
+    };
+  </script>
+</body>
+</html>
