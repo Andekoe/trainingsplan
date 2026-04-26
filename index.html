@@ -6,6 +6,8 @@
 <title>Trainingsplan</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 </head>
 <body>
 
@@ -698,9 +700,12 @@
 <!-- COMPLETION SCREEN -->
 <div class="complete-screen" id="complete-screen">
   <div class="complete-emoji">💪</div>
-  <div class="complete-title">FERTIG!</div>
-  <div class="complete-sub">Starke Session.<br>Erhol dich gut und trink genug.</div>
-  <button class="btn-back" onclick="closeComplete()">Zurück zum Plan</button>
+  <div class="complete-title">Workout complete!</div>
+  <div class="complete-sub">Great job! You've finished your entire workout.</div>
+  <div class="complete-buttons">
+    <button class="btn-reset-workout" onclick="resetWorkout()">Reset workout</button>
+    <button class="btn-back" onclick="closeComplete()">Back</button>
+  </div>
 </div>
 
 <script src="script.js"></script>

@@ -119,6 +119,15 @@ function updateProgress(id) {
 
 function stopProp(e) { e.stopPropagation(); }
 
+function isWorkoutComplete(user) {
+  // Check if all exercises in all sessions are completed
+  return Object.keys(state[user]).every(sessionId => {
+    const exerciseStates = state[user][sessionId];
+    const totalExercises = total[user][sessionId];
+    return Object.keys(exerciseStates).length === totalExercises;
+  });
+}
+
 function resetSession() {
   const panel = document.getElementById('panel-' + activeTab);
   panel.querySelectorAll('.ex-card').forEach(c => {
@@ -130,7 +139,14 @@ function resetSession() {
 }
 
 function finishSession() {
-  // Scroll to top
+  // Check if workout is complete
+  if (isWorkoutComplete(currentUser)) {
+    // Show success screen
+    document.getElementById('complete-screen').classList.add('visible');
+    return;
+  }
+  
+  // Scroll to top and reset (existing behavior)
   window.scrollTo({ top: 0, behavior: 'smooth' });
   
   // Reset all trainings for current user
@@ -195,9 +211,40 @@ function updateUIForUser(user, sessionId) {
   });
 }
 
+function closeComplete() {
+  document.getElementById('complete-screen').classList.remove('visible');
+}
+
+function resetWorkout() {
+  // Reset all trainings for current user
+  Object.keys(state[currentUser]).forEach(sessionId => {
+    state[currentUser][sessionId] = {}; // Clear all exercise states
+  });
+  
+  // Update UI
+  updateUIForUser(currentUser, null);
+  saveState();
+  
+  // Close success screen
+  closeComplete();
+}
+
 // Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
   updateButtonText();
   updateUIForUser(currentUser, null);
+  registerServiceWorker();
 });
+
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('Service Worker registered successfully:', registration);
+      })
+      .catch(error => {
+        console.log('Service Worker registration failed:', error);
+      });
+  }
+}
