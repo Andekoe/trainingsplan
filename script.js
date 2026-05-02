@@ -80,6 +80,28 @@ const DEFAULT_PLANS = {
         ]},
       ]
     }
+  },
+  plan3: {
+    testPushA: {
+      title: 'TEST PUSH', meta: 'Test-Routine: Push', isPush: true,
+      groups: [
+        { label: 'Oberkörper', exercises: [
+          { name: 'Bankdrücken',       sets: '1 Satz', reps: '5 Wdh',  equip: 'LH' },
+          { name: 'Schulterdrücken',   sets: '1 Satz', reps: '5 Wdh',  equip: 'KH' },
+          { name: 'Trizeps Dips',      sets: '1 Satz', reps: '5 Wdh',  equip: 'Körpergewicht' },
+        ]},
+      ]
+    },
+    testPullA: {
+      title: 'TEST PULL', meta: 'Test-Routine: Pull', isPush: false,
+      groups: [
+        { label: 'Oberkörper', exercises: [
+          { name: 'Langhantelrudern',  sets: '1 Satz', reps: '5 Wdh',  equip: 'LH' },
+          { name: 'Latzug breit',      sets: '1 Satz', reps: '5 Wdh',  equip: 'Maschine' },
+          { name: 'Bizeps-Curls',      sets: '1 Satz', reps: '5 Wdh',  equip: 'KH' },
+        ]},
+      ]
+    }
   }
 };
 
@@ -92,8 +114,40 @@ let sheetCtx = null; // { sessionId, groupIdx, exIdx } — exIdx null = add new
 
 const state = {
   plan1: { pushA: 0, pullA: 0, pushB: 0, pullB: 0, maxWeights: {} },
-  plan2: { ganzkörper: 0, maxWeights: {} }
+  plan2: { ganzkörper: 0, maxWeights: {} },
+  plan3: { testPushA: 0, testPullA: 0, maxWeights: {} }
 };
+
+// ─── GAMIFICATION / SESSION TRACKING ──────────────────────────────────────────
+const TIER_THRESHOLDS = [
+  { min: 1,   max: 3,   icon: '🪨', name: 'Matchstick' },
+  { min: 4,   max: 8,   icon: '🔥', name: 'Torch' },
+  { min: 9,   max: 15,  icon: '🔥🔥', name: 'Bonfire' },
+  { min: 16,  max: 30,  icon: '🥉', name: 'Bronze' },
+  { min: 31,  max: 50,  icon: '🥈', name: 'Silver' },
+  { min: 51,  max: 75,  icon: '🥇', name: 'Gold' },
+  { min: 76,  max: 100, icon: '💎', name: 'Diamond' },
+  { min: 101, max: null, icon: '👑', name: 'Champion' }
+];
+
+let sessionStats = {
+  totalSessions: 0,
+  history: [] // { date: 'YYYY-MM-DD', timestamp, sessionName, exerciseCount, tier }
+};
+
+function getTierForCount(count) {
+  if (count === 0) return TIER_THRESHOLDS[0];
+  for (const tier of TIER_THRESHOLDS) {
+    if (count >= tier.min && (tier.max === null || count <= tier.max)) {
+      return tier;
+    }
+  }
+  return TIER_THRESHOLDS[TIER_THRESHOLDS.length - 1];
+}
+
+function getCurrentTier() {
+  return getTierForCount(sessionStats.totalSessions);
+}
 
 function getCurrentSessions() {
   return Object.keys(plans[activePlan]);
@@ -208,7 +262,16 @@ function updateProgress(id, total) {
 }
 
 function updatePlanBadge() {
-  document.getElementById('plan-selector').textContent = activePlan === 'plan1' ? 'Plan 1' : 'Plan 2';
+  const text = activePlan === 'plan1' ? 'Plan 1' : activePlan === 'plan2' ? 'Plan 2' : 'Test Plan';
+  document.getElementById('plan-selector').textContent = text;
+}
+
+function updateStreakBadge() {
+  const tier = getCurrentTier();
+  const badge = document.getElementById('streak-badge');
+  if (badge) {
+    badge.textContent = tier.icon + ' ' + sessionStats.totalSessions;
+  }
 }
 
 // ─── PLAN SWITCHING ───────────────────────────────────────────────────────────
@@ -362,7 +425,37 @@ function resetSession() {
 }
 
 function finishSession() {
-  document.getElementById('complete-screen').classList.add('visible');
+  const oldTier = getCurrentTier();
+  const total = countExercises(plans[activePlan][activeTab]);
+  const done = state[activePlan][activeTab];
+  const isComplete = done === total;
+
+  if (isComplete) {
+    sessionStats.totalSessions++;
+    const newTier = getCurrentTier();
+    const now = new Date();
+    const dateStr = now.toISOString().split('T')[0];
+    const sessionName = plans[activePlan][activeTab].title;
+
+    sessionStats.history.push({
+      date: dateStr,
+      timestamp: now.toISOString(),
+      sessionName: sessionName,
+      exerciseCount: total,
+      tierUnlocked: oldTier.min !== newTier.min ? newTier : null
+    });
+
+    saveSessionStats();
+    updateStreakBadge();
+  }
+
+  const completeScreen = document.getElementById('complete-screen');
+  const tier = getCurrentTier();
+  const tierDisplay = completeScreen.querySelector('.complete-tier');
+  if (tierDisplay) {
+    tierDisplay.textContent = tier.icon + ' ' + sessionStats.totalSessions + ' Sessions';
+  }
+  completeScreen.classList.add('visible');
 }
 
 function closeComplete() {
@@ -462,6 +555,56 @@ function refreshPanel(sessionId) {
   updateProgress(sessionId);
 }
 
+// ─── HISTORY & STATS ──────────────────────────────────────────────────────────
+function openHistoryModal() {
+  const modal = document.getElementById('history-modal');
+  const content = modal.querySelector('.modal-content');
+  if (!modal || !content) return;
+
+  let html = '<div class="history-header">';
+  const tier = getCurrentTier();
+  html += '<div class="history-stats">';
+  html += '<div class="stat-row">';
+  html += '<span class="stat-label">Insgesamt:</span>';
+  html += '<span class="stat-value">' + tier.icon + ' ' + sessionStats.totalSessions + '</span>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+
+  html += '<div class="history-list">';
+  if (sessionStats.history.length === 0) {
+    html += '<div class="history-empty">Noch keine Sessions abgeschlossen.</div>';
+  } else {
+    const recent = sessionStats.history.slice().reverse();
+    for (const entry of recent.slice(0, 20)) {
+      const date = new Date(entry.timestamp);
+      const dateStr = date.toLocaleDateString('de-DE');
+      const timeStr = date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+      html += '<div class="history-entry">';
+      html += '<div class="entry-main">';
+      html += '<div class="entry-session">' + entry.sessionName + '</div>';
+      html += '<div class="entry-meta">' + dateStr + ' · ' + timeStr + '</div>';
+      if (entry.tierUnlocked) {
+        html += '<div class="entry-tier">Neuer Rang: ' + entry.tierUnlocked.icon + '</div>';
+      }
+      html += '</div>';
+      html += '</div>';
+    }
+  }
+  html += '</div>';
+
+  content.innerHTML = html;
+  modal.classList.add('open');
+  document.getElementById('history-overlay').classList.add('open');
+}
+
+function closeHistoryModal() {
+  const modal = document.getElementById('history-modal');
+  if (modal) modal.classList.remove('open');
+  const overlay = document.getElementById('history-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
 // ─── STORAGE ──────────────────────────────────────────────────────────────────
 function loadState() {
   const savedPlans = localStorage.getItem('trainingsplan-plans');
@@ -474,14 +617,27 @@ function loadState() {
     const loaded = JSON.parse(savedState);
     Object.assign(state.plan1, loaded.plan1 || {});
     Object.assign(state.plan2, loaded.plan2 || {});
+    Object.assign(state.plan3, loaded.plan3 || {});
+  }
+
+  const savedStats = localStorage.getItem('trainingsplan-session-stats');
+  if (savedStats) {
+    const loaded = JSON.parse(savedStats);
+    sessionStats.totalSessions = loaded.totalSessions || 0;
+    sessionStats.history = loaded.history || [];
   }
 
   switchPlan(activePlan);
   setupEvents();
+  updateStreakBadge();
 }
 
 function saveState() {
   localStorage.setItem('trainingsplan-state', JSON.stringify(state));
+}
+
+function saveSessionStats() {
+  localStorage.setItem('trainingsplan-session-stats', JSON.stringify(sessionStats));
 }
 
 function savePlans() {

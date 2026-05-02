@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 -m http.server 8000)"
+      "Bash(python3 -m http.server 8000)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: add test plan, session tracking with tier gamification, and history modal *)"
     ]
   }
 }
