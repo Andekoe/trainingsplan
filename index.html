@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GYM LOG</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo">GYM LOG</div>
+  <div class="topbar-right">
+    <button class="btn-edit-mode" id="btn-edit-mode" onclick="toggleEditMode()" title="Bearbeiten">✏</button>
+    <div class="session-badge" id="session-badge">Push A</div>
+  </div>
+</div>
+
+<!-- TRAINING TABS -->
+<div class="tab-row">
+  <button class="tab push active" onclick="switchTab('pushA', this)">Push A</button>
+  <button class="tab pull" onclick="switchTab('pullA', this)">Pull A</button>
+  <button class="tab push" onclick="switchTab('pushB', this)">Push B</button>
+  <button class="tab pull" onclick="switchTab('pullB', this)">Pull B</button>
+</div>
+
+<!-- MAIN CONTENT — panels populated by script.js -->
+<div class="main" id="main-scroll">
+  <div class="training-panel active" id="panel-pushA"></div>
+  <div class="training-panel" id="panel-pullA"></div>
+  <div class="training-panel" id="panel-pushB"></div>
+  <div class="training-panel" id="panel-pullB"></div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottombar" id="bottombar">
+  <div class="normal-btns">
+    <button class="btn-reset" onclick="resetSession()">↺ Zurücksetzen</button>
+    <button class="btn-done push" id="btn-finish" onclick="finishSession()">Session abschließen</button>
+  </div>
+  <button class="btn-done push edit-done-btn" onclick="toggleEditMode()">Fertig</button>
+</div>
+
+<!-- COMPLETION SCREEN -->
+<div class="complete-screen" id="complete-screen">
+  <div class="complete-emoji">💪</div>
+  <div class="complete-title">FERTIG!</div>
+  <div class="complete-sub">Starke Session.<br>Erhol dich gut und trink genug.</div>
+  <button class="btn-back" onclick="closeComplete()">Zurück zum Plan</button>
+</div>
+
+<!-- EDIT SHEET OVERLAY -->
+<div class="sheet-overlay" id="sheet-overlay" onclick="closeSheet()"></div>
+
+<!-- EDIT SHEET -->
+<div class="edit-sheet" id="edit-sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title" id="sheet-title">Übung bearbeiten</div>
+  <div class="sheet-fields">
+    <div class="field-group">
+      <label class="field-label" for="edit-name">Name</label>
+      <input class="field-input" type="text" id="edit-name" placeholder="Übungsname" autocomplete="off">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="edit-sets">Sätze</label>
+      <input class="field-input" type="text" id="edit-sets" placeholder="z.B. 3 Sätze" autocomplete="off">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="edit-reps">Wiederholungen</label>
+      <input class="field-input" type="text" id="edit-reps" placeholder="z.B. 10–12 Wdh" autocomplete="off">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="edit-equip">Gerät</label>
+      <input class="field-input" type="text" id="edit-equip" placeholder="z.B. KH, Maschine" autocomplete="off">
+    </div>
+  </div>
+  <div class="sheet-actions">
+    <button class="btn-delete-ex" id="btn-delete-ex" onclick="deleteExercise()">Löschen</button>
+    <button class="btn-save-ex" id="btn-save-ex" onclick="saveExercise()">Speichern</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
