@@ -42,7 +42,7 @@
     line-height: 1;
   }
 
-  .session-badge {
+  .plan-selector {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 1.5px;
@@ -50,8 +50,12 @@
     padding: 5px 12px;
     border-radius: 20px;
     border: 1px solid var(--border);
+    background: none;
     color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
   }
+  .plan-selector:active { border-color: var(--text); color: var(--text); }
 
   /* ── TRAINING TABS ── */
   .tab-row {
@@ -434,6 +438,27 @@
     transition: background 0.15s;
   }
   .ex-edit-btn:active { background: var(--s2); color: var(--text); }
+
+  .ex-reorder {
+    display: flex;
+    gap: 6px;
+    padding: 8px 16px 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn-move-ex {
+    flex: 1;
+    padding: 8px;
+    background: var(--dim);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-move-ex:active { background: var(--s2); color: var(--text); }
 
   .btn-add-ex {
     width: 100%;

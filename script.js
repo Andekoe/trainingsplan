@@ -1,78 +1,103 @@
 // ─── DEFAULT EXERCISE DATA ────────────────────────────────────────────────────
 const DEFAULT_PLANS = {
-  pushA: {
-    title: 'PUSH A', meta: 'Brust · Schultern · Trizeps', isPush: true,
-    groups: [
-      { label: 'Oberkörper', exercises: [
-        { name: 'Bankdrücken',              sets: '4 Sätze', reps: '8–10 Wdh',  equip: 'KH / LH' },
-        { name: 'Schrägbank Drücken',       sets: '3 Sätze', reps: '10–12 Wdh', equip: 'KH' },
-        { name: 'Schulterdrücken',          sets: '4 Sätze', reps: '8–10 Wdh',  equip: 'KH' },
-        { name: 'Seitheben',                sets: '3 Sätze', reps: '12–15 Wdh', equip: 'KH' },
-        { name: 'Trizeps Dips',             sets: '3 Sätze', reps: '10–12 Wdh', equip: 'Körpergewicht' },
-      ]},
-      { label: 'Beine', exercises: [
-        { name: 'Beinpresse',               sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Maschine' },
-        { name: 'Beinstrecker',             sets: '2 Sätze', reps: '15 Wdh',    equip: 'Maschine' },
-      ]},
-    ]
+  plan1: {
+    pushA: {
+      title: 'PUSH A', meta: 'Brust · Schultern · Trizeps', isPush: true,
+      groups: [
+        { label: 'Oberkörper', exercises: [
+          { name: 'Bankdrücken',              sets: '4 Sätze', reps: '8–10 Wdh',  equip: 'KH / LH' },
+          { name: 'Schrägbank Drücken',       sets: '3 Sätze', reps: '10–12 Wdh', equip: 'KH' },
+          { name: 'Schulterdrücken',          sets: '4 Sätze', reps: '8–10 Wdh',  equip: 'KH' },
+          { name: 'Seitheben',                sets: '3 Sätze', reps: '12–15 Wdh', equip: 'KH' },
+          { name: 'Trizeps Dips',             sets: '3 Sätze', reps: '10–12 Wdh', equip: 'Körpergewicht' },
+        ]},
+        { label: 'Beine', exercises: [
+          { name: 'Beinpresse',               sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Maschine' },
+          { name: 'Beinstrecker',             sets: '2 Sätze', reps: '15 Wdh',    equip: 'Maschine' },
+        ]},
+      ]
+    },
+    pullA: {
+      title: 'PULL A', meta: 'Rücken · Bizeps', isPush: false,
+      groups: [
+        { label: 'Oberkörper', exercises: [
+          { name: 'Langhantelrudern',         sets: '4 Sätze', reps: '8–10 Wdh',  equip: 'LH' },
+          { name: 'Kabelrudern',              sets: '4 Sätze', reps: '10–12 Wdh', equip: 'Kabel' },
+          { name: 'Latzug breit',             sets: '3 Sätze', reps: '10–12 Wdh', equip: 'Maschine' },
+          { name: 'Face Pulls',               sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Kabel' },
+          { name: 'Bizeps-Curls',             sets: '3 Sätze', reps: '12 Wdh',    equip: 'KH' },
+        ]},
+        { label: 'Beine', exercises: [
+          { name: 'Beinbeuger liegend',       sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Maschine' },
+          { name: 'Wadenheben stehend',       sets: '2 Sätze', reps: '15 Wdh',    equip: 'Maschine' },
+        ]},
+      ]
+    },
+    pushB: {
+      title: 'PUSH B', meta: 'Brust · Schultern · Trizeps', isPush: true,
+      groups: [
+        { label: 'Oberkörper', exercises: [
+          { name: 'Schrägbank Drücken',       sets: '4 Sätze', reps: '8–10 Wdh',  equip: 'KH / LH' },
+          { name: 'Brustpresse Maschine',     sets: '3 Sätze', reps: '10–12 Wdh', equip: 'Maschine' },
+          { name: 'Schulterdrücken Maschine', sets: '3 Sätze', reps: '10–12 Wdh', equip: 'Maschine' },
+          { name: 'Seitheben',                sets: '3 Sätze', reps: '12–15 Wdh', equip: 'KH' },
+          { name: 'Trizeps Überkopf',         sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Kabel / KH' },
+        ]},
+        { label: 'Beine', exercises: [
+          { name: 'Beinpresse',               sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Maschine' },
+          { name: 'Beinstrecker',             sets: '2 Sätze', reps: '15 Wdh',    equip: 'Maschine' },
+        ]},
+      ]
+    },
+    pullB: {
+      title: 'PULL B', meta: 'Rücken · Bizeps', isPush: false,
+      groups: [
+        { label: 'Oberkörper', exercises: [
+          { name: 'Latzug eng / neutral',     sets: '4 Sätze', reps: '10–12 Wdh', equip: 'Maschine' },
+          { name: 'Kabelrudern',              sets: '4 Sätze', reps: '10–12 Wdh', equip: 'Kabel' },
+          { name: 'Kurzhantel Pullover',      sets: '3 Sätze', reps: '12 Wdh',    equip: 'KH' },
+          { name: 'Bizeps-Curl Maschine',     sets: '3 Sätze', reps: '12 Wdh',    equip: 'Maschine' },
+          { name: 'Hammer-Curl',              sets: '2 Sätze', reps: '12 Wdh',    equip: 'KH' },
+        ]},
+        { label: 'Beine', exercises: [
+          { name: 'Beinbeuger sitzend',       sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Maschine' },
+          { name: 'Wadenheben sitzend',       sets: '2 Sätze', reps: '15 Wdh',    equip: 'Maschine' },
+        ]},
+      ]
+    }
   },
-  pullA: {
-    title: 'PULL A', meta: 'Rücken · Bizeps', isPush: false,
-    groups: [
-      { label: 'Oberkörper', exercises: [
-        { name: 'Langhantelrudern',         sets: '4 Sätze', reps: '8–10 Wdh',  equip: 'LH' },
-        { name: 'Kabelrudern',              sets: '4 Sätze', reps: '10–12 Wdh', equip: 'Kabel' },
-        { name: 'Latzug breit',             sets: '3 Sätze', reps: '10–12 Wdh', equip: 'Maschine' },
-        { name: 'Face Pulls',               sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Kabel' },
-        { name: 'Bizeps-Curls',             sets: '3 Sätze', reps: '12 Wdh',    equip: 'KH' },
-      ]},
-      { label: 'Beine', exercises: [
-        { name: 'Beinbeuger liegend',       sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Maschine' },
-        { name: 'Wadenheben stehend',       sets: '2 Sätze', reps: '15 Wdh',    equip: 'Maschine' },
-      ]},
-    ]
-  },
-  pushB: {
-    title: 'PUSH B', meta: 'Brust · Schultern · Trizeps', isPush: true,
-    groups: [
-      { label: 'Oberkörper', exercises: [
-        { name: 'Schrägbank Drücken',       sets: '4 Sätze', reps: '8–10 Wdh',  equip: 'KH / LH' },
-        { name: 'Brustpresse Maschine',     sets: '3 Sätze', reps: '10–12 Wdh', equip: 'Maschine' },
-        { name: 'Schulterdrücken Maschine', sets: '3 Sätze', reps: '10–12 Wdh', equip: 'Maschine' },
-        { name: 'Seitheben',                sets: '3 Sätze', reps: '12–15 Wdh', equip: 'KH' },
-        { name: 'Trizeps Überkopf',         sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Kabel / KH' },
-      ]},
-      { label: 'Beine', exercises: [
-        { name: 'Beinpresse',               sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Maschine' },
-        { name: 'Beinstrecker',             sets: '2 Sätze', reps: '15 Wdh',    equip: 'Maschine' },
-      ]},
-    ]
-  },
-  pullB: {
-    title: 'PULL B', meta: 'Rücken · Bizeps', isPush: false,
-    groups: [
-      { label: 'Oberkörper', exercises: [
-        { name: 'Latzug eng / neutral',     sets: '4 Sätze', reps: '10–12 Wdh', equip: 'Maschine' },
-        { name: 'Kabelrudern',              sets: '4 Sätze', reps: '10–12 Wdh', equip: 'Kabel' },
-        { name: 'Kurzhantel Pullover',      sets: '3 Sätze', reps: '12 Wdh',    equip: 'KH' },
-        { name: 'Bizeps-Curl Maschine',     sets: '3 Sätze', reps: '12 Wdh',    equip: 'Maschine' },
-        { name: 'Hammer-Curl',              sets: '2 Sätze', reps: '12 Wdh',    equip: 'KH' },
-      ]},
-      { label: 'Beine', exercises: [
-        { name: 'Beinbeuger sitzend',       sets: '3 Sätze', reps: '12–15 Wdh', equip: 'Maschine' },
-        { name: 'Wadenheben sitzend',       sets: '2 Sätze', reps: '15 Wdh',    equip: 'Maschine' },
-      ]},
-    ]
+  plan2: {
+    ganzkörper: {
+      title: 'GANZKÖRPER', meta: 'Ganzkörper-Routine', isPush: true,
+      groups: [
+        { label: 'Ganzkörper', exercises: [
+          { name: 'Beinpresse',                     sets: '2–3 Sätze', reps: '10–15 Wdh', equip: 'Maschine' },
+          { name: 'Latzug zur Brust',               sets: '2–3 Sätze', reps: '10–12 Wdh', equip: 'Maschine' },
+          { name: 'Brustpresse (Maschine)',         sets: '2–3 Sätze', reps: '10–12 Wdh', equip: 'Maschine' },
+          { name: 'Rudern (Maschine oder Kabel)',   sets: '2–3 Sätze', reps: '10–12 Wdh', equip: 'Maschine / Kabel' },
+          { name: 'Schulterdrücken (Maschine)',     sets: '2 Sätze',   reps: '10–12 Wdh', equip: 'Maschine' },
+          { name: 'Beinbeuger (Maschine)',          sets: '2–3 Sätze', reps: '12–15 Wdh', equip: 'Maschine' },
+        ]},
+      ]
+    }
   }
 };
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
-const SESSIONS = ['pushA', 'pullA', 'pushB', 'pullB'];
 let plans = null;
-const state = { pushA: 0, pullA: 0, pushB: 0, pullB: 0, maxWeights: {} };
+let activePlan = 'plan1';
 let activeTab = 'pushA';
 let editMode = false;
 let sheetCtx = null; // { sessionId, groupIdx, exIdx } — exIdx null = add new
+
+const state = {
+  plan1: { pushA: 0, pullA: 0, pushB: 0, pullB: 0, maxWeights: {} },
+  plan2: { ganzkörper: 0, maxWeights: {} }
+};
+
+function getCurrentSessions() {
+  return Object.keys(plans[activePlan]);
+}
 
 // ─── RENDERING ────────────────────────────────────────────────────────────────
 function countExercises(plan) {
@@ -80,12 +105,13 @@ function countExercises(plan) {
 }
 
 function renderPanel(sessionId) {
-  const plan   = plans[sessionId];
+  const plan   = plans[activePlan][sessionId];
   const panel  = document.getElementById('panel-' + sessionId);
   const color  = plan.isPush ? '#d4f244' : '#44f2c8';
   const aClass = plan.isPush ? 'accent-push' : 'accent-pull';
   const pClass = plan.isPush ? '' : ' pull-card';
   const total  = countExercises(plan);
+  const curState = state[activePlan];
 
   let html = `
     <div class="session-header">
@@ -115,7 +141,7 @@ function renderPanel(sessionId) {
 
     group.exercises.forEach((ex, eIdx) => {
       const maxKey = sessionId + ':' + ex.name;
-      const maxVal = state.maxWeights[maxKey] || '—';
+      const maxVal = curState.maxWeights[maxKey] || '—';
       html += `
         <div class="ex-card${pClass}" data-session="${sessionId}" data-group="${gIdx}" data-ex="${eIdx}">
           <div class="ex-main">
@@ -130,6 +156,11 @@ function renderPanel(sessionId) {
             </div>
             ${editMode ? '<div class="ex-edit-btn">✏</div>' : ''}
           </div>
+          ${editMode ? `
+          <div class="ex-reorder">
+            ${eIdx > 0 ? `<button class="btn-move-ex" data-direction="up" title="Nach oben">↑</button>` : ''}
+            ${eIdx < group.exercises.length - 1 ? `<button class="btn-move-ex" data-direction="down" title="Nach unten">↓</button>` : ''}
+          </div>` : ''}
           <div class="ex-max-row">
             <span class="max-label">Letztes Max</span>
             <div class="max-value-wrap">
@@ -149,21 +180,23 @@ function renderPanel(sessionId) {
 }
 
 function renderAll() {
-  SESSIONS.forEach(id => renderPanel(id));
-  SESSIONS.forEach(id => {
-    const total = countExercises(plans[id]);
+  getCurrentSessions().forEach(id => renderPanel(id));
+  getCurrentSessions().forEach(id => {
+    const total = countExercises(plans[activePlan][id]);
     const cards = document.querySelectorAll('#panel-' + id + ' .ex-card');
-    for (let i = 0; i < state[id]; i++) {
+    const done = state[activePlan][id];
+    for (let i = 0; i < done; i++) {
       if (cards[i]) cards[i].classList.add('done');
     }
     updateProgress(id, total);
   });
+  updatePlanBadge();
 }
 
 // ─── PROGRESS ─────────────────────────────────────────────────────────────────
 function updateProgress(id, total) {
-  if (total === undefined) total = countExercises(plans[id]);
-  const done   = state[id];
+  if (total === undefined) total = countExercises(plans[activePlan][id]);
+  const done   = state[activePlan][id];
   const pct    = Math.round((done / total) * 100);
   const offset = 113.1 - (113.1 * pct / 100);
   const ring   = document.getElementById('ring-' + id);
@@ -174,9 +207,42 @@ function updateProgress(id, total) {
   if (subEl) subEl.textContent = done + ' von ' + total + ' Übungen erledigt';
 }
 
+function updatePlanBadge() {
+  document.getElementById('plan-selector').textContent = activePlan === 'plan1' ? 'Plan 1' : 'Plan 2';
+}
+
+// ─── PLAN SWITCHING ───────────────────────────────────────────────────────────
+function switchPlan(plan) {
+  activePlan = plan;
+  activeTab = getCurrentSessions()[0];
+  document.querySelectorAll('.training-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-row').forEach(tr => tr.innerHTML = '');
+
+  const tabRow = document.querySelector('.tab-row');
+  getCurrentSessions().forEach((sessionId, idx) => {
+    const session = plans[plan][sessionId];
+    const btn = document.createElement('button');
+    btn.className = 'tab ' + (session.isPush ? 'push' : 'pull') + (idx === 0 ? ' active' : '');
+    btn.textContent = session.title;
+    btn.onclick = function() { switchTab(sessionId, this); };
+    tabRow.appendChild(btn);
+  });
+
+  switchTab(activeTab, document.querySelector('.tab.active'));
+  renderAll();
+}
+
 // ─── EVENT DELEGATION ─────────────────────────────────────────────────────────
 function setupEvents() {
   document.getElementById('main-scroll').addEventListener('click', function(e) {
+    // Move exercise button
+    const moveBtn = e.target.closest('.btn-move-ex');
+    if (moveBtn) {
+      const card = moveBtn.closest('.ex-card');
+      moveExercise(card.dataset.session, +card.dataset.group, +card.dataset.ex, moveBtn.dataset.direction);
+      return;
+    }
     // Edit button on card
     const editBtn = e.target.closest('.ex-edit-btn');
     if (editBtn) {
@@ -209,29 +275,41 @@ function setupEvents() {
 // ─── CARD TOGGLE ──────────────────────────────────────────────────────────────
 function toggleCard(card, sessionId) {
   const wasDone = card.classList.contains('done');
+  const curState = state[activePlan];
   if (wasDone) {
     card.classList.remove('done');
-    state[sessionId]--;
+    curState[sessionId]--;
   } else {
     card.classList.add('done');
-    state[sessionId]++;
+    curState[sessionId]++;
   }
   updateProgress(sessionId);
   saveState();
 }
 
+// ─── EXERCISE REORDERING ──────────────────────────────────────────────────────
+function moveExercise(sessionId, groupIdx, exIdx, direction) {
+  const group = plans[activePlan][sessionId].groups[groupIdx];
+  const newIdx = direction === 'up' ? exIdx - 1 : exIdx + 1;
+  if (newIdx < 0 || newIdx >= group.exercises.length) return;
+  [group.exercises[exIdx], group.exercises[newIdx]] = [group.exercises[newIdx], group.exercises[exIdx]];
+  savePlans();
+  refreshPanel(sessionId);
+}
+
 // ─── MAX WEIGHT ───────────────────────────────────────────────────────────────
 function editMax(event, sessionId, groupIdx, exIdx) {
-  const ex  = plans[sessionId].groups[groupIdx].exercises[exIdx];
+  const ex  = plans[activePlan][sessionId].groups[groupIdx].exercises[exIdx];
   const key = sessionId + ':' + ex.name;
   const row = event.target.closest('.ex-max-row');
   const span = row.querySelector('.max-value');
   if (!span) return;
 
+  const curState = state[activePlan];
   const input = document.createElement('input');
   input.type  = 'number';
   input.className = 'max-input';
-  input.value = state.maxWeights[key] || '';
+  input.value = curState.maxWeights[key] || '';
   input.placeholder = '0';
   input.min   = '0';
   input.max   = '9999';
@@ -243,14 +321,14 @@ function editMax(event, sessionId, groupIdx, exIdx) {
   function save() {
     const val = parseFloat(input.value);
     if (!isNaN(val) && val > 0) {
-      state.maxWeights[key] = val;
+      curState.maxWeights[key] = val;
     } else {
-      delete state.maxWeights[key];
+      delete curState.maxWeights[key];
     }
     saveState();
     const newSpan = document.createElement('span');
     newSpan.className = 'max-value';
-    newSpan.textContent = state.maxWeights[key] ?? '—';
+    newSpan.textContent = curState.maxWeights[key] ?? '—';
     input.replaceWith(newSpan);
   }
   input.addEventListener('blur', save);
@@ -264,8 +342,7 @@ function switchTab(id, btn) {
   document.getElementById('panel-' + id).classList.add('active');
   btn.classList.add('active');
   activeTab = id;
-  document.getElementById('session-badge').textContent = btn.textContent;
-  const isPush = id.startsWith('push');
+  const isPush = plans[activePlan][id].isPush;
   document.getElementById('btn-finish').className = 'btn-done ' + (isPush ? 'push' : 'pull');
   document.getElementById('main-scroll').scrollTop = 0;
 }
@@ -273,7 +350,7 @@ function switchTab(id, btn) {
 // ─── SESSION ACTIONS ──────────────────────────────────────────────────────────
 function resetSession() {
   document.querySelectorAll('#panel-' + activeTab + ' .ex-card').forEach(c => c.classList.remove('done'));
-  state[activeTab] = 0;
+  state[activePlan][activeTab] = 0;
   updateProgress(activeTab);
   saveState();
 }
@@ -297,7 +374,7 @@ function toggleEditMode() {
 
 // ─── EDIT SHEET ───────────────────────────────────────────────────────────────
 function openEditSheet(sessionId, groupIdx, exIdx) {
-  const ex = plans[sessionId].groups[groupIdx].exercises[exIdx];
+  const ex = plans[activePlan][sessionId].groups[groupIdx].exercises[exIdx];
   sheetCtx = { sessionId, groupIdx, exIdx };
   document.getElementById('sheet-title').textContent   = 'Übung bearbeiten';
   document.getElementById('edit-name').value            = ex.name;
@@ -343,9 +420,9 @@ function saveExercise() {
   if (!name) return;
 
   if (exIdx === null) {
-    plans[sessionId].groups[groupIdx].exercises.push({ name, sets, reps, equip });
+    plans[activePlan][sessionId].groups[groupIdx].exercises.push({ name, sets, reps, equip });
   } else {
-    plans[sessionId].groups[groupIdx].exercises[exIdx] = { name, sets, reps, equip };
+    plans[activePlan][sessionId].groups[groupIdx].exercises[exIdx] = { name, sets, reps, equip };
   }
   savePlans();
   closeSheet();
@@ -355,9 +432,9 @@ function saveExercise() {
 function deleteExercise() {
   if (!sheetCtx || sheetCtx.exIdx === null) return;
   const { sessionId, groupIdx, exIdx } = sheetCtx;
-  plans[sessionId].groups[groupIdx].exercises.splice(exIdx, 1);
-  const newTotal = countExercises(plans[sessionId]);
-  if (state[sessionId] > newTotal) state[sessionId] = newTotal;
+  plans[activePlan][sessionId].groups[groupIdx].exercises.splice(exIdx, 1);
+  const newTotal = countExercises(plans[activePlan][sessionId]);
+  if (state[activePlan][sessionId] > newTotal) state[activePlan][sessionId] = newTotal;
   savePlans();
   saveState();
   closeSheet();
@@ -367,7 +444,8 @@ function deleteExercise() {
 function refreshPanel(sessionId) {
   renderPanel(sessionId);
   const cards = document.querySelectorAll('#panel-' + sessionId + ' .ex-card');
-  for (let i = 0; i < state[sessionId]; i++) {
+  const done = state[activePlan][sessionId];
+  for (let i = 0; i < done; i++) {
     if (cards[i]) cards[i].classList.add('done');
   }
   updateProgress(sessionId);
@@ -382,11 +460,12 @@ function loadState() {
 
   const savedState = localStorage.getItem('trainingsplan-state');
   if (savedState) {
-    Object.assign(state, JSON.parse(savedState));
-    if (!state.maxWeights) state.maxWeights = {};
+    const loaded = JSON.parse(savedState);
+    Object.assign(state.plan1, loaded.plan1 || {});
+    Object.assign(state.plan2, loaded.plan2 || {});
   }
 
-  renderAll();
+  switchPlan(activePlan);
   setupEvents();
 }
 
