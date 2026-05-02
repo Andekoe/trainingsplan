@@ -645,3 +645,17 @@ function savePlans() {
 }
 
 document.addEventListener('DOMContentLoaded', loadState);
+
+// ─── DEBUG ────────────────────────────────────────────────────────────────────
+window.debugStats = function() {
+  console.log('=== GYM LOG SESSION STATS ===');
+  console.log('Total Sessions:', sessionStats.totalSessions);
+  console.log('Current Tier:', getCurrentTier());
+  console.log('History:', sessionStats.history);
+  console.log('LocalStorage keys:', Object.keys(localStorage).filter(k => k.includes('trainingsplan')));
+};
+window.debugClear = function() {
+  localStorage.removeItem('trainingsplan-session-stats');
+  location.reload();
+};
+console.log('Debug commands: window.debugStats() or window.debugClear()');

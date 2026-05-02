@@ -1,6 +1,6 @@
 {
-  "name": "GYM LOG",
-  "short_name": "GYM LOG",
+  "name": "Gym Log",
+  "short_name": "Gym Log",
   "description": "Persönlicher Workout Tracker für das Gym",
   "start_url": ".",
   "display": "standalone",
