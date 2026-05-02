@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gymlog-v4';
+const CACHE_NAME = 'gymlog-v999';
 const urlsToCache = [
   '/',
   '/index.html',
