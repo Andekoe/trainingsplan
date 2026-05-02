@@ -1,0 +1,12 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" fill="#000000"/>
+  <g transform="translate(256,256)">
+    <!-- Dumbbell plates -->
+    <rect x="-180" y="-40" width="80" height="80" rx="8" fill="#ffffff"/>
+    <rect x="100" y="-40" width="80" height="80" rx="8" fill="#ffffff"/>
+    <!-- Bar -->
+    <rect x="-100" y="-8" width="200" height="16" rx="8" fill="#ffffff"/>
+    <!-- Center knurling -->
+    <rect x="-4" y="-12" width="8" height="24" fill="#666666"/>
+  </g>
+</svg>
