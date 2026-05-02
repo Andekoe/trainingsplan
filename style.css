@@ -464,9 +464,69 @@
     outline: none;
   }
 
-  /* Panel visibility */
-  .training-panel { display: none; }
-  .training-panel.active { display: block; }
+  /* Panel visibility and transitions */
+  .training-panel {
+    display: none;
+    animation: panelExit 250ms var(--ease-out) forwards;
+  }
+  .training-panel.active {
+    display: block;
+    animation: panelEnter 250ms var(--ease-out) forwards;
+  }
+  .training-panel.plan-switch {
+    animation: panelExitPlan 350ms var(--ease-out) forwards;
+  }
+  .training-panel.active.plan-switch {
+    animation: panelEnterPlan 350ms var(--ease-out) forwards;
+  }
+
+  @keyframes panelEnter {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes panelExit {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+  }
+
+  @keyframes panelEnterPlan {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes panelExitPlan {
+    from {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.98);
+      filter: blur(4px);
+    }
+  }
 
   /* Divider between groups */
   .group-divider { height: 1px; background: var(--border); margin: 20px 0 0; }

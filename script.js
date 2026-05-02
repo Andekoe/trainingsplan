@@ -215,6 +215,9 @@ function updatePlanBadge() {
 function switchPlan(plan) {
   activePlan = plan;
   activeTab = getCurrentSessions()[0];
+
+  // Mark panels for plan-switch animation
+  document.querySelectorAll('.training-panel.active').forEach(p => p.classList.add('plan-switch'));
   document.querySelectorAll('.training-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-row').forEach(tr => tr.innerHTML = '');
@@ -337,6 +340,9 @@ function editMax(event, sessionId, groupIdx, exIdx) {
 
 // ─── TAB SWITCHING ────────────────────────────────────────────────────────────
 function switchTab(id, btn) {
+  const oldPanel = document.querySelector('.training-panel.active');
+  if (oldPanel) oldPanel.classList.remove('plan-switch');
+
   document.querySelectorAll('.training-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + id).classList.add('active');
@@ -361,6 +367,11 @@ function finishSession() {
 
 function closeComplete() {
   document.getElementById('complete-screen').classList.remove('visible');
+  // Reset all exercises for current session (keeping max weights)
+  document.querySelectorAll('#panel-' + activeTab + ' .ex-card').forEach(c => c.classList.remove('done'));
+  state[activePlan][activeTab] = 0;
+  updateProgress(activeTab);
+  saveState();
 }
 
 // ─── EDIT MODE ────────────────────────────────────────────────────────────────
