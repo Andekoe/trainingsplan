@@ -10,6 +10,19 @@
     --pull:     #44f2c8;
     --done-bg:  rgba(212,242,68,0.07);
     --radius:   16px;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --duration-fast: 150ms;
+    --duration-standard: 200ms;
+    --duration-drawer: 300ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --duration-fast: 0ms;
+      --duration-standard: 0ms;
+      --duration-drawer: 0ms;
+    }
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -53,9 +66,9 @@
     background: none;
     color: var(--muted);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: color var(--duration-standard) var(--ease-out), border-color var(--duration-standard) var(--ease-out), transform var(--duration-fast) var(--ease-out);
   }
-  .plan-selector:active { border-color: var(--text); color: var(--text); }
+  .plan-selector:active { border-color: var(--text); color: var(--text); transform: scale(0.96); }
 
   /* ── TRAINING TABS ── */
   .tab-row {
@@ -80,10 +93,11 @@
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background var(--duration-standard) var(--ease-out), color var(--duration-standard) var(--ease-out), border-color var(--duration-standard) var(--ease-out), transform var(--duration-fast) var(--ease-out);
     white-space: nowrap;
   }
 
+  .tab:active { transform: scale(0.96); }
   .tab.push.active { background: var(--push); color: #000; border-color: var(--push); }
   .tab.pull.active { background: var(--pull); color: #000; border-color: var(--pull); }
 
@@ -146,7 +160,7 @@
   .prog-ring svg { transform: rotate(-90deg); }
 
   .prog-ring .ring-bg { fill: none; stroke: var(--dim); stroke-width: 3; }
-  .prog-ring .ring-fill { fill: none; stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset 0.4s ease; }
+  .prog-ring .ring-fill { fill: none; stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset var(--duration-standard) var(--ease-out); }
   .prog-ring .ring-text {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
@@ -174,7 +188,7 @@
     border-radius: var(--radius);
     margin-bottom: 8px;
     overflow: hidden;
-    transition: border-color 0.2s;
+    transition: border-color var(--duration-standard) var(--ease-out), background var(--duration-standard) var(--ease-out);
   }
 
   .ex-card.done {
@@ -268,10 +282,10 @@
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: color var(--duration-standard) var(--ease-out), border-color var(--duration-standard) var(--ease-out), transform var(--duration-fast) var(--ease-out);
   }
 
-  .btn-reset:active { border-color: var(--muted); color: var(--text); }
+  .btn-reset:active { border-color: var(--muted); color: var(--text); transform: scale(0.97); }
 
   .btn-done {
     flex: 1;
@@ -282,29 +296,37 @@
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background var(--duration-standard) var(--ease-out), transform var(--duration-fast) var(--ease-out);
     letter-spacing: 0.3px;
   }
 
   .btn-done.push { background: var(--push); color: #000; }
   .btn-done.pull { background: var(--pull); color: #000; }
-  .btn-done:active { transform: scale(0.98); opacity: 0.9; }
+  .btn-done:active { transform: scale(0.97); }
 
   /* ── COMPLETION SCREEN ── */
   .complete-screen {
-    display: none;
     position: fixed;
     inset: 0;
     background: var(--bg);
     z-index: 300;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 40px;
     text-align: center;
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+    transition: opacity var(--duration-drawer) var(--ease-out), transform var(--duration-drawer) var(--ease-out);
   }
 
-  .complete-screen.visible { display: flex; }
+  .complete-screen.visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
 
   .complete-emoji { font-size: 64px; margin-bottom: 24px; }
 
@@ -328,7 +350,10 @@
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
+    transition: transform var(--duration-fast) var(--ease-out);
   }
+
+  .btn-back:active { transform: scale(0.97); }
 
   /* ── MAX WEIGHT ROW ── */
   .ex-max-row {
@@ -338,7 +363,7 @@
     padding: 8px 16px 10px;
     border-top: 1px solid var(--border);
     cursor: pointer;
-    transition: background 0.15s;
+    transition: background var(--duration-fast) var(--ease-out);
   }
 
   .ex-max-row:active { background: rgba(255,255,255,0.04); }
@@ -411,10 +436,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: background var(--duration-standard) var(--ease-out), border-color var(--duration-standard) var(--ease-out), color var(--duration-standard) var(--ease-out), transform var(--duration-fast) var(--ease-out);
     flex-shrink: 0;
   }
 
+  .btn-edit-mode:active { transform: scale(0.96); }
   .btn-edit-mode.active {
     background: var(--push);
     border-color: var(--push);
@@ -435,9 +461,9 @@
     font-size: 13px;
     cursor: pointer;
     color: var(--muted);
-    transition: background 0.15s;
+    transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
   }
-  .ex-edit-btn:active { background: var(--s2); color: var(--text); }
+  .ex-edit-btn:active { background: var(--s2); color: var(--text); transform: scale(0.96); }
 
   .ex-reorder {
     display: flex;
@@ -456,9 +482,9 @@
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
   }
-  .btn-move-ex:active { background: var(--s2); color: var(--text); }
+  .btn-move-ex:active { background: var(--s2); color: var(--text); transform: scale(0.96); }
 
   .btn-add-ex {
     width: 100%;
@@ -473,9 +499,9 @@
     font-weight: 500;
     cursor: pointer;
     text-align: center;
-    transition: all 0.2s;
+    transition: border-color var(--duration-standard) var(--ease-out), color var(--duration-standard) var(--ease-out), transform var(--duration-fast) var(--ease-out);
   }
-  .btn-add-ex:active { border-color: var(--muted); color: var(--text); }
+  .btn-add-ex:active { border-color: var(--muted); color: var(--text); transform: scale(0.97); }
 
   /* ── BOTTOMBAR EDIT MODE ── */
   .normal-btns { display: flex; gap: 10px; flex: 1; }
@@ -485,13 +511,18 @@
 
   /* ── SHEET OVERLAY ── */
   .sheet-overlay {
-    display: none;
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.55);
     z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-standard) var(--ease-out);
   }
-  .sheet-overlay.open { display: block; }
+  .sheet-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   /* ── EDIT SHEET ── */
   .edit-sheet {
@@ -503,9 +534,15 @@
     padding: 16px 20px max(env(safe-area-inset-bottom), 24px);
     z-index: 150;
     transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    transition: transform var(--duration-drawer) var(--ease-drawer);
   }
   .edit-sheet.open { transform: translateY(0); }
+
+  @starting-style {
+    .edit-sheet.open {
+      transform: translateY(100%);
+    }
+  }
 
   .sheet-handle {
     width: 36px;
@@ -550,10 +587,10 @@
     font-weight: 500;
     padding: 11px 14px;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color var(--duration-standard) var(--ease-out), background var(--duration-standard) var(--ease-out);
     -webkit-appearance: none;
   }
-  .field-input:focus { border-color: var(--push); }
+  .field-input:focus { border-color: var(--push); background: var(--s1); }
 
   .sheet-actions {
     display: flex;
@@ -572,9 +609,9 @@
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background var(--duration-standard) var(--ease-out), color var(--duration-standard) var(--ease-out), transform var(--duration-fast) var(--ease-out);
   }
-  .btn-delete-ex:active { background: rgba(224, 85, 85, 0.1); }
+  .btn-delete-ex:active { background: rgba(224, 85, 85, 0.1); transform: scale(0.97); }
 
   .btn-save-ex {
     flex: 1;
@@ -587,6 +624,6 @@
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background var(--duration-standard) var(--ease-out), transform var(--duration-fast) var(--ease-out);
   }
-  .btn-save-ex:active { opacity: 0.9; transform: scale(0.98); }
+  .btn-save-ex:active { transform: scale(0.97); }
