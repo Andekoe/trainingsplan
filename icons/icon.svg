@@ -1,12 +1,16 @@
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" fill="#000000"/>
-  <g transform="translate(256,256)">
-    <!-- Dumbbell plates -->
-    <rect x="-180" y="-40" width="80" height="80" rx="8" fill="#ffffff"/>
-    <rect x="100" y="-40" width="80" height="80" rx="8" fill="#ffffff"/>
-    <!-- Bar -->
-    <rect x="-100" y="-8" width="200" height="16" rx="8" fill="#ffffff"/>
-    <!-- Center knurling -->
-    <rect x="-4" y="-12" width="8" height="24" fill="#666666"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4f244"/>
+      <stop offset="100%" stop-color="#44f2c8"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="#080808"/>
+  <circle cx="256" cy="256" r="196" fill="none" stroke="#1a1a1a" stroke-width="36"/>
+  <circle cx="256" cy="256" r="196" fill="none" stroke="url(#ringGrad)" stroke-width="36"
+    stroke-dasharray="1105" stroke-dashoffset="138"
+    stroke-linecap="round"
+    transform="rotate(-90 256 256)"/>
+  <polyline points="158,256 224,322 358,188"
+    fill="none" stroke="#f0f0f0" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
