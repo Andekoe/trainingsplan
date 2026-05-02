@@ -131,9 +131,14 @@ const TIER_THRESHOLDS = [
 ];
 
 let sessionStats = {
-  totalSessions: 0,
-  history: [] // { date: 'YYYY-MM-DD', timestamp, sessionName, exerciseCount, tier }
+  // Structure: plan1: { totalSessions: 0, history: [] }, plan2: { ... }, etc.
 };
+
+function initPlanStats(planId) {
+  if (!sessionStats[planId]) {
+    sessionStats[planId] = { totalSessions: 0, history: [] };
+  }
+}
 
 function getTierForCount(count) {
   if (count === 0) return TIER_THRESHOLDS[0];
@@ -146,7 +151,9 @@ function getTierForCount(count) {
 }
 
 function getCurrentTier() {
-  return getTierForCount(sessionStats.totalSessions);
+  const planStats = sessionStats[activePlan];
+  if (!planStats) initPlanStats(activePlan);
+  return getTierForCount(sessionStats[activePlan].totalSessions);
 }
 
 function getCurrentSessions() {
@@ -277,6 +284,8 @@ function updateStreakBadge() {
 // ─── PLAN SWITCHING ───────────────────────────────────────────────────────────
 function switchPlan(plan) {
   activePlan = plan;
+  localStorage.setItem('trainingsplan-active-plan', plan);
+  initPlanStats(plan);
   activeTab = getCurrentSessions()[0];
 
   // Mark panels for plan-switch animation
@@ -425,19 +434,21 @@ function resetSession() {
 }
 
 function finishSession() {
+  initPlanStats(activePlan);
+  const planStats = sessionStats[activePlan];
   const oldTier = getCurrentTier();
   const total = countExercises(plans[activePlan][activeTab]);
   const done = state[activePlan][activeTab];
   const isComplete = done === total;
 
   if (isComplete) {
-    sessionStats.totalSessions++;
+    planStats.totalSessions++;
     const newTier = getCurrentTier();
     const now = new Date();
     const dateStr = now.toISOString().split('T')[0];
     const sessionName = plans[activePlan][activeTab].title;
 
-    sessionStats.history.push({
+    planStats.history.push({
       date: dateStr,
       timestamp: now.toISOString(),
       sessionName: sessionName,
@@ -453,7 +464,7 @@ function finishSession() {
   const tier = getCurrentTier();
   const tierDisplay = completeScreen.querySelector('.complete-tier');
   if (tierDisplay) {
-    tierDisplay.textContent = tier.icon + ' ' + sessionStats.totalSessions + ' Sessions';
+    tierDisplay.textContent = tier.icon + ' ' + planStats.totalSessions + ' Sessions';
   }
   completeScreen.classList.add('visible');
 }
@@ -557,25 +568,29 @@ function refreshPanel(sessionId) {
 
 // ─── HISTORY & STATS ──────────────────────────────────────────────────────────
 function openHistoryModal() {
+  initPlanStats(activePlan);
+  const planStats = sessionStats[activePlan];
   const modal = document.getElementById('history-modal');
   const content = modal.querySelector('.modal-content');
   if (!modal || !content) return;
 
   let html = '<div class="history-header">';
   const tier = getCurrentTier();
+  const planName = plans[activePlan] ? Object.values(plans[activePlan])[0]?.title || activePlan : activePlan;
+  html += '<div class="history-plan-name">' + planName.split(' ')[0] + '</div>';
   html += '<div class="history-stats">';
   html += '<div class="stat-row">';
   html += '<span class="stat-label">Insgesamt:</span>';
-  html += '<span class="stat-value">' + tier.icon + ' ' + sessionStats.totalSessions + '</span>';
+  html += '<span class="stat-value">' + tier.icon + ' ' + planStats.totalSessions + '</span>';
   html += '</div>';
   html += '</div>';
   html += '</div>';
 
   html += '<div class="history-list">';
-  if (sessionStats.history.length === 0) {
+  if (planStats.history.length === 0) {
     html += '<div class="history-empty">Noch keine Sessions abgeschlossen.</div>';
   } else {
-    const recent = sessionStats.history.slice().reverse();
+    const recent = planStats.history.slice().reverse();
     for (const entry of recent.slice(0, 20)) {
       const date = new Date(entry.timestamp);
       const dateStr = date.toLocaleDateString('de-DE');
@@ -605,6 +620,105 @@ function closeHistoryModal() {
   if (overlay) overlay.classList.remove('open');
 }
 
+// ─── PLAN SELECTOR MODAL ──────────────────────────────────────────────────────
+function openPlanSelector() {
+  const modal = document.getElementById('plan-selector-modal');
+  const content = modal.querySelector('.modal-content');
+  if (!modal || !content) return;
+
+  let html = '<div class="plan-list">';
+  Object.keys(plans).forEach(planId => {
+    const planSessions = plans[planId];
+    const firstSession = Object.values(planSessions)[0];
+    const planName = firstSession?.title || planId;
+    const stats = sessionStats[planId] || { totalSessions: 0 };
+    const tier = getTierForCount(stats.totalSessions);
+    const isActive = planId === activePlan ? ' active' : '';
+
+    html += '<div class="plan-item' + isActive + '">';
+    html += '<div class="plan-info">';
+    html += '<div class="plan-name">' + planName + '</div>';
+    html += '<div class="plan-stat">' + tier.icon + ' ' + stats.totalSessions + ' Sessions</div>';
+    html += '</div>';
+    html += '<button class="btn-select-plan" onclick="selectPlan(\'' + planId + '\')">Öffnen</button>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  html += '<div class="plan-actions">';
+  html += '<button class="btn-create-plan" onclick="openCreatePlanForm()">+ Neuer Plan</button>';
+  html += '</div>';
+
+  content.innerHTML = html;
+  modal.classList.add('open');
+  document.getElementById('plan-selector-overlay').classList.add('open');
+}
+
+function closePlanSelector() {
+  const modal = document.getElementById('plan-selector-modal');
+  if (modal) modal.classList.remove('open');
+  const overlay = document.getElementById('plan-selector-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function selectPlan(planId) {
+  if (plans[planId]) {
+    switchPlan(planId);
+    updatePlanBadge();
+    closePlanSelector();
+  }
+}
+
+function openCreatePlanForm() {
+  const planName = prompt('Plan-Name eingeben:', 'Mein Plan');
+  if (!planName || !planName.trim()) return;
+
+  const sanitizedName = 'custom_' + Date.now();
+  const newPlanName = planName.trim();
+
+  // Create new plan with 2 test sessions as template
+  plans[sanitizedName] = {
+    [sanitizedName + '_session1']: {
+      title: newPlanName + ' - Session 1',
+      meta: 'Custom Session',
+      isPush: true,
+      groups: [
+        { label: 'Oberkörper', exercises: [
+          { name: 'Übung 1', sets: '3 Sätze', reps: '8–10 Wdh', equip: 'Equipment' },
+          { name: 'Übung 2', sets: '3 Sätze', reps: '8–10 Wdh', equip: 'Equipment' },
+        ]},
+      ]
+    },
+    [sanitizedName + '_session2']: {
+      title: newPlanName + ' - Session 2',
+      meta: 'Custom Session',
+      isPush: false,
+      groups: [
+        { label: 'Oberkörper', exercises: [
+          { name: 'Übung 1', sets: '3 Sätze', reps: '8–10 Wdh', equip: 'Equipment' },
+          { name: 'Übung 2', sets: '3 Sätze', reps: '8–10 Wdh', equip: 'Equipment' },
+        ]},
+      ]
+    }
+  };
+
+  // Initialize state and stats for new plan
+  state[sanitizedName] = {
+    [sanitizedName + '_session1']: 0,
+    [sanitizedName + '_session2']: 0,
+    maxWeights: {}
+  };
+  initPlanStats(sanitizedName);
+
+  savePlans();
+  saveState();
+  saveSessionStats();
+
+  switchPlan(sanitizedName);
+  updatePlanBadge();
+  openPlanSelector();
+}
+
 // ─── STORAGE ──────────────────────────────────────────────────────────────────
 function loadState() {
   const savedPlans = localStorage.getItem('trainingsplan-plans');
@@ -622,9 +736,20 @@ function loadState() {
 
   const savedStats = localStorage.getItem('trainingsplan-session-stats');
   if (savedStats) {
-    const loaded = JSON.parse(savedStats);
-    sessionStats.totalSessions = loaded.totalSessions || 0;
-    sessionStats.history = loaded.history || [];
+    try {
+      sessionStats = JSON.parse(savedStats);
+    } catch (e) {
+      sessionStats = {};
+    }
+  }
+
+  // Initialize stats for all existing plans
+  Object.keys(plans).forEach(planId => initPlanStats(planId));
+
+  // Restore last-opened plan
+  const savedActivePlan = localStorage.getItem('trainingsplan-active-plan');
+  if (savedActivePlan && plans[savedActivePlan]) {
+    activePlan = savedActivePlan;
   }
 
   switchPlan(activePlan);

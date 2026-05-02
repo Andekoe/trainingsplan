@@ -22,7 +22,7 @@
   <div class="topbar-right">
     <button class="btn-history" id="btn-history" onclick="openHistoryModal()" title="Verlauf">📊</button>
     <button class="btn-edit-mode" id="btn-edit-mode" onclick="toggleEditMode()" title="Bearbeiten">✏</button>
-    <button class="plan-selector" id="plan-selector" onclick="switchPlan(activePlan === 'plan1' ? 'plan2' : activePlan === 'plan2' ? 'plan3' : 'plan1')">Plan 1</button>
+    <button class="btn-plan-selector" id="plan-selector" onclick="openPlanSelector()" title="Plan wechseln">📋</button>
   </div>
 </div>
 
@@ -95,6 +95,16 @@
 <!-- HISTORY MODAL -->
 <div class="history-modal" id="history-modal">
   <div class="modal-handle"></div>
+  <div class="modal-content"></div>
+</div>
+
+<!-- PLAN SELECTOR OVERLAY -->
+<div class="plan-selector-overlay" id="plan-selector-overlay" onclick="closePlanSelector()"></div>
+
+<!-- PLAN SELECTOR MODAL -->
+<div class="plan-selector-modal" id="plan-selector-modal">
+  <div class="modal-handle"></div>
+  <div class="modal-title">Wähle einen Plan</div>
   <div class="modal-content"></div>
 </div>
 
